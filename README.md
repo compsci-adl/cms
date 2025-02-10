@@ -7,12 +7,10 @@ To setup an payload, first setup any database and include the relevant URI in th
 
 Then create a secure secret and include in the `.env` under PAYLOAD_SECRET. 
 
-Finally, run
+Finally, navigate to the `payload-cms` directory and to start an instance of payload run:
 ```
 pnpm dev
 ```
-
-to start an instance of payload.
 
 ## User
 The root user is seeded into database upon first load with the credentials:
