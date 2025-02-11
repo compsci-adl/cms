@@ -2,7 +2,7 @@
 The Computer Science Club's CMS
 
 
-## setup
+## Setup
 To setup an payload, first setup any database and include the relevant URI in the `.env` under DATABASE_URI. 
 
 Then create a secure secret and include in the `.env` under PAYLOAD_SECRET. 

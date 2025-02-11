@@ -105,26 +105,15 @@ export interface Media {
 export interface Event {
   id: string;
   title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  'start-time': string;
-  'end-time': string;
+  details: string;
+  time?: string | null;
   date: string;
   location: string;
   banner: string | Media;
+  link?: {
+    'URL-text'?: string | null;
+    URL?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -230,12 +219,17 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
-  'start-time'?: T;
-  'end-time'?: T;
+  details?: T;
+  time?: T;
   date?: T;
   location?: T;
   banner?: T;
+  link?:
+    | T
+    | {
+        'URL-text'?: T;
+        URL?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

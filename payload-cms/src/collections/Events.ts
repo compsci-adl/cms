@@ -21,29 +21,13 @@ export const Events: CollectionConfig = {
             required: true,
         },
         {
-            name: 'description',
-            type: 'richText',
+            name: 'details',
+            type: 'textarea',
             required: true,
         },
         {
-            name: 'start-time',
-            type: 'date',
-            admin: {
-                date: {
-                    pickerAppearance: 'timeOnly',
-                }
-            },
-            required: true,
-        },
-        {
-            name: 'end-time',
-            type: 'date',
-            admin: {
-                date: {
-                    pickerAppearance: 'timeOnly',
-                }
-            },
-            required: true,
+            name: 'time',
+            type: 'text',
         },
         {
             name: 'date',
@@ -65,12 +49,28 @@ export const Events: CollectionConfig = {
             type: 'relationship',
             relationTo: 'media',
             required: true,
+        },
+        {
+            type: 'group',
+            name: 'link',
+            fields: [
+                {
+                    name: 'URL-text',
+                    type: 'text',
+                },
+                {
+                    type: 'text',
+                    name: 'URL',
+                }
+            ]
         }
+
     ],
     // Access to event or admin
     access: {
         create: (isAdmin || isEvents),
         update: (isAdmin || isEvents),
-        delete: (isAdmin || isEvents)
+        delete: (isAdmin || isEvents),
+        read: () => true,
     }
 }
