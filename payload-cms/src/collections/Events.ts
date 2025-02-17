@@ -10,10 +10,6 @@ export const Events: CollectionConfig = {
         enableRichTextLink: true,
         description: "Please upload a banner image to media before filling in event."
     },
-    versions: {
-        drafts: true,
-    }
-    ,
     fields: [
         {
             name: 'title',
@@ -71,6 +67,18 @@ export const Events: CollectionConfig = {
         create: (isAdmin || isEvents),
         update: (isAdmin || isEvents),
         delete: (isAdmin || isEvents),
-        read: () => true,
+        read: ({req}) => {
+            if (req.user) return true;
+            
+            return {
+                _status: {
+                    equals: 'published',
+                },
+            }
+        },
+        readVersions: (isAdmin || isEvents),
+    },
+    versions: {
+        drafts: true,
     }
 }

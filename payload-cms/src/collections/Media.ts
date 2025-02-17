@@ -6,9 +6,13 @@ export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
-    create: () => true,
     delete: isAdmin,
-    update: () => true,
+    update: ({req}) => {
+      return !req.user;
+    },
+    create: ({req}) => {
+      return !req.user;
+    },
   },
   fields: [
     {

@@ -10,8 +10,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Events } from './collections/Events'
-import { DevBundlerService } from 'next/dist/server/lib/dev-bundler-service'
-
+ 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -22,6 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  cors: [process.env.CS_URL || ''],
   collections: [
     Users,
     Media,
