@@ -1,7 +1,6 @@
 # cms
 The Computer Science Club's CMS
 
-
 ## Setup
 
 1. Setup database to be used with Payload (payload is setup for mongoDB), then include DB URI in the `.env` under `DATABASE_URI`. MongoDB will be in the form `mongodb://[username:password@]host[/[defaultauthdb][?options]] ` 

@@ -40,4 +40,6 @@ next-env.d.ts
 
 .env
 
+.vscode
+
 /media

@@ -1,18 +1,17 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import path from 'path';
+import { buildConfig } from 'payload';
+import sharp from 'sharp';
+import { fileURLToPath } from 'url';
+import { Events } from './collections/Events';
+import { Media } from './collections/Media';
+import { Users } from './collections/Users';
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Events } from './collections/Events'
- 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
@@ -22,12 +21,8 @@ export default buildConfig({
     },
   },
   cors: [process.env.CS_URL || ''],
-  collections: [
-    Users,
-    Media,
-    Events
-    ], // Include any new collections here
-    
+  collections: [Users, Media, Events], // Include any new collections here
+
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -37,26 +32,22 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
-  ],
   onInit: async (payload) => {
     const adminUsers = await payload.find({
       collection: 'users',
-      where: {roles: {equals: 'admin'}}
-    })
+      where: { roles: { equals: 'admin' } },
+    });
 
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
       const newUser = await payload.create({
         collection: 'users',
         data: {
-          email: 'dev@csclub.org.au',
-          password: 'test',
+          email: process.env.ROOT_EMAIL?.toString() || '',
+          password: process.env.ROOT_PASS?.toString() || '',
           roles: ['admin'],
-        }
-      })
+        },
+      });
     }
-  }
-})
+  },
+});

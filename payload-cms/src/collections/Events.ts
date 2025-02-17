@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload'
-import { isAdmin } from '@/access/isAdmin'
-import { isEvents } from '@/access/isEvents'
+import { isAdmin } from '@/access/isAdmin';
+import { isEvents } from '@/access/isEvents';
+import type { CollectionConfig } from 'payload';
 
 export const Events: CollectionConfig = {
     // Collection for events, only admins and event team has access
@@ -8,7 +8,7 @@ export const Events: CollectionConfig = {
     admin: {
         useAsTitle: 'title',
         enableRichTextLink: true,
-        description: "Please upload a banner image to media before filling in event."
+        description: 'Please upload a banner image to media before filling in event.',
     },
     fields: [
         {
@@ -17,7 +17,7 @@ export const Events: CollectionConfig = {
             required: true,
             admin: {
                 description: 'Title of the event',
-            }
+            },
         },
         {
             name: 'details',
@@ -25,22 +25,39 @@ export const Events: CollectionConfig = {
             required: true,
             admin: {
                 description: 'Description of event (does not need to include time/date)',
-            }
+            },
         },
         {
             name: 'time',
-            type: 'text',
-            admin: {
-                description: 'Time of event in the form: HH:MMam/pm - HH:MMam/pm',
-            }
+            type: 'group',
+            fields: [
+                {
+                    name: 'start',
+                    type: 'date',
+                    admin: {
+                        date: {
+                            pickerAppearance: 'timeOnly'
+                        }
+                    }
+                },
+                {
+                    name: 'end',
+                    type: 'date',
+                    admin: {
+                        date: {
+                            pickerAppearance: 'timeOnly'
+                        }
+                    }
+                }
+            ]
         },
         {
             name: 'date',
             type: 'date',
             admin: {
                 date: {
-                    pickerAppearance: 'dayOnly',
-                }
+                    pickerAppearance: 'default',
+                },
             },
             required: true,
         },
@@ -56,44 +73,46 @@ export const Events: CollectionConfig = {
             required: true,
             admin: {
                 description: 'If not already done so upload desired image to Media collection',
-            }
+            },
         },
         {
             type: 'group',
             name: 'link',
             fields: [
                 {
-                    name: 'URL-text',
+                    name: 'displayText',
                     type: 'text',
                     admin: {
                         description: 'Desired display text for the URL',
-                    }
+                    },
                 },
                 {
                     type: 'text',
-                    name: 'URL',    
-                }
-            ]
-        }
-
+                    name: 'Link',
+                    admin: {
+                        description: 'URL for the link',
+                    },
+                },
+            ],
+        },
     ],
     // Access to event or admin
     access: {
-        create: (isAdmin || isEvents),
-        update: (isAdmin || isEvents),
-        delete: (isAdmin || isEvents),
-        read: ({req}) => {
+        create: isAdmin || isEvents,
+        update: isAdmin || isEvents,
+        delete: isAdmin || isEvents,
+        read: ({ req }) => {
             if (req.user) return true;
-            
+
             return {
                 _status: {
                     equals: 'published',
                 },
-            }
+            };
         },
-        readVersions: (isAdmin || isEvents),
+        readVersions: isAdmin || isEvents,
     },
     versions: {
         drafts: true,
-    }
-}
+    },
+};

@@ -118,10 +118,10 @@ export interface Event {
    * Description of event (does not need to include time/date)
    */
   details: string;
-  /**
-   * Time of event in the form: HH:MMam/pm - HH:MMam/pm
-   */
-  time?: string | null;
+  time?: {
+    start?: string | null;
+    end?: string | null;
+  };
   date: string;
   location: string;
   /**
@@ -132,8 +132,11 @@ export interface Event {
     /**
      * Desired display text for the URL
      */
-    'URL-text'?: string | null;
-    URL?: string | null;
+    displayText?: string | null;
+    /**
+     * URL for the link
+     */
+    Link?: string | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -241,15 +244,20 @@ export interface MediaSelect<T extends boolean = true> {
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
   details?: T;
-  time?: T;
+  time?:
+    | T
+    | {
+        start?: T;
+        end?: T;
+      };
   date?: T;
   location?: T;
   banner?: T;
   link?:
     | T
     | {
-        'URL-text'?: T;
-        URL?: T;
+        displayText?: T;
+        Link?: T;
       };
   updatedAt?: T;
   createdAt?: T;
