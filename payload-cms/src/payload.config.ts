@@ -19,10 +19,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-  },
+  },  
   cors: [process.env.CS_URL || ''],
   collections: [Users, Media, Events], // Include any new collections here
-
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
