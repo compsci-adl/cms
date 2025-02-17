@@ -14,9 +14,9 @@ pnpm dev
 ```
 
 ## User
-The root user is seeded into database upon first load with the credentials:
+The root user is seeded into database upon first load the credentials can be changed in the `.env`:
 ```
-email: 'dev@csclub.org.au'
-password: 'test'
+ROOT_EMAIL=
+ROOT_PASS=
 ```
 This user has admin permissions to create more users and give further permissions.
