@@ -1,5 +1,6 @@
 import { isAdmin } from '@/access/isAdmin'
 import { type CollectionConfig, type Access, accessOperation } from 'payload'
+import { bool } from 'sharp';
 
 export const Media: CollectionConfig = {
   // Collection for media uploads
@@ -7,11 +8,11 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
     delete: isAdmin,
-    update: ({req}) => {
-      return !req.user;
+    update: ({req: {user}}) => {
+      return Boolean(user);
     },
-    create: ({req}) => {
-      return !req.user;
+    create: ({req: {user}}) => {
+      return Boolean(user);
     },
   },
   fields: [
@@ -19,6 +20,9 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
+      admin: {
+        description: 'Please include alt name for file',
+      }
     },
   ],
   upload: true,

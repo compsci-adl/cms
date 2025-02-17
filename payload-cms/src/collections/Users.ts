@@ -47,6 +47,9 @@ export const Users: CollectionConfig = {
       access: {
         create: isFieldAdmin,
         update: isFieldAdmin,
+      },
+      admin: {
+        description: 'Users can have one or many roles'
       }
     }
   ],

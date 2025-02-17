@@ -15,15 +15,24 @@ export const Events: CollectionConfig = {
             name: 'title',
             type: 'text',
             required: true,
+            admin: {
+                description: 'Title of the event',
+            }
         },
         {
             name: 'details',
             type: 'textarea',
             required: true,
+            admin: {
+                description: 'Description of event (does not need to include time/date)',
+            }
         },
         {
             name: 'time',
             type: 'text',
+            admin: {
+                description: 'Time of event in the form: HH:MMam/pm - HH:MMam/pm',
+            }
         },
         {
             name: 'date',
@@ -45,6 +54,9 @@ export const Events: CollectionConfig = {
             type: 'relationship',
             relationTo: 'media',
             required: true,
+            admin: {
+                description: 'If not already done so upload desired image to Media collection',
+            }
         },
         {
             type: 'group',
@@ -53,10 +65,13 @@ export const Events: CollectionConfig = {
                 {
                     name: 'URL-text',
                     type: 'text',
+                    admin: {
+                        description: 'Desired display text for the URL',
+                    }
                 },
                 {
                     type: 'text',
-                    name: 'URL',
+                    name: 'URL',    
                 }
             ]
         }

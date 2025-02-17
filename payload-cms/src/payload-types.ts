@@ -65,6 +65,9 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  /**
+   * Users can have one or many roles
+   */
   roles?: ('admin' | 'openSource' | 'events' | 'sponsorships')[] | null;
   updatedAt: string;
   createdAt: string;
@@ -83,6 +86,9 @@ export interface User {
  */
 export interface Media {
   id: string;
+  /**
+   * Please include alt name for file
+   */
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -104,13 +110,28 @@ export interface Media {
  */
 export interface Event {
   id: string;
+  /**
+   * Title of the event
+   */
   title: string;
+  /**
+   * Description of event (does not need to include time/date)
+   */
   details: string;
+  /**
+   * Time of event in the form: HH:MMam/pm - HH:MMam/pm
+   */
   time?: string | null;
   date: string;
   location: string;
+  /**
+   * If not already done so upload desired image to Media collection
+   */
   banner: string | Media;
   link?: {
+    /**
+     * Desired display text for the URL
+     */
     'URL-text'?: string | null;
     URL?: string | null;
   };
