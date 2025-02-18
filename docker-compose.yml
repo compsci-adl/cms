@@ -1,0 +1,39 @@
+services:
+  payload:
+    image: node:20-alpine
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    working_dir: /home/node/app/
+    command: sh -c "npm install -g pnpm@9 && pnpm install && pnpm dev"
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    networks:
+      - csclub
+
+  # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+    logging:
+      driver: none
+    networks:
+      - csclub
+
+
+volumes:
+  data:
+  node_modules:
+  
+networks:
+  csclub:
+    external: true
