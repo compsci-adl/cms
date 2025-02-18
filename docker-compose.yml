@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   payload:
     image: node:20-alpine
@@ -9,7 +7,7 @@ services:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
     working_dir: /home/node/app/
-    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
+    command: sh -c "npm install -g pnpm@9 && pnpm install && pnpm dev"
     depends_on:
       - mongo
     env_file:
@@ -34,5 +32,8 @@ services:
 
 volumes:
   data:
-  # pgdata:
   node_modules:
+  
+networks:
+  csclub:
+    external: true
