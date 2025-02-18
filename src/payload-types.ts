@@ -118,9 +118,9 @@ export interface Event {
    * Description of event (does not need to include time/date)
    */
   details: string;
-  time?: {
-    start?: string | null;
-    end?: string | null;
+  time: {
+    start: string;
+    end: string;
   };
   date: string;
   location: string;

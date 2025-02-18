@@ -19,7 +19,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },  
-  cors: [process.env.CS_URL || ''],
+  cors: [process.env.FRONTEND_URL || ''],
   collections: [Users, Media, Events], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

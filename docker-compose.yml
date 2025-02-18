@@ -12,9 +12,10 @@ services:
     command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
     depends_on:
       - mongo
-      # - postgres
     env_file:
       - .env
+    networks:
+      - csclub
 
   # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
   mongo:
@@ -27,15 +28,9 @@ services:
       - data:/data/db
     logging:
       driver: none
+    networks:
+      - csclub
 
-  # Uncomment the following to use postgres
-  # postgres:
-  #   restart: always
-  #   image: postgres:latest
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
 
 volumes:
   data:

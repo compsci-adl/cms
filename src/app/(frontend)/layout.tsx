@@ -2,8 +2,8 @@ import React from 'react';
 import './styles.css';
 
 export const metadata = {
-    description: 'The Computer Science Clubs CMS',
-    title: 'CSClub CMS',
+    description: "The Computer Science Club's CMS",
+    title: 'CS Club CMS',
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

@@ -38,7 +38,8 @@ export const Events: CollectionConfig = {
                         date: {
                             pickerAppearance: 'timeOnly'
                         }
-                    }
+                    },
+                    required: true,
                 },
                 {
                     name: 'end',
@@ -47,9 +48,10 @@ export const Events: CollectionConfig = {
                         date: {
                             pickerAppearance: 'timeOnly'
                         }
-                    }
+                    },
+                    required: true,
                 }
-            ]
+            ],
         },
         {
             name: 'date',
