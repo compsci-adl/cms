@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import { Events } from './collections/Events';
 import { Media } from './collections/Media';
 import { Users } from './collections/Users';
+import { Sponsors } from './collections/Sponsors';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -20,7 +21,7 @@ export default buildConfig({
     },
   },  
   cors: [process.env.FRONTEND_URL || ''],
-  collections: [Users, Media, Events], // Include any new collections here
+  collections: [Users, Media, Events, Sponsors], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
