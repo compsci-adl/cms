@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { isAdmin } from '@/access/isAdmin';
-import { isEvents } from '@/access/isEvents';
+import { isSponsorship } from '@/access/isSponsorships';
 
 export const Sponsors: CollectionConfig = {
     // Collection for sponsors
@@ -15,8 +15,8 @@ export const Sponsors: CollectionConfig = {
             type: 'text',
             required: true,
             admin: {
-                description: 'Name of the company'
-            }
+                description: 'Name of the company',
+            },
         },
         {
             name: 'Company description',
@@ -64,9 +64,9 @@ export const Sponsors: CollectionConfig = {
         },
     ],
     access: {
-        create: isAdmin || isEvents,
-        update: isAdmin || isEvents,
-        delete: isAdmin || isEvents,
+        create: isAdmin || isSponsorship,
+        update: isAdmin || isSponsorship,
+        delete: isAdmin || isSponsorship,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -76,7 +76,7 @@ export const Sponsors: CollectionConfig = {
                 },
             };
         },
-        readVersions: isAdmin || isEvents,
+        readVersions: isAdmin || isSponsorship,
     },
     versions: {
         drafts: true,

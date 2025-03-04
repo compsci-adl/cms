@@ -69,6 +69,8 @@ export interface Config {
     media: Media;
     events: Event;
     sponsors: Sponsor;
+    'tech-stack': TechStack;
+    Projects: Project;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +81,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
+    'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
+    Projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -228,6 +232,41 @@ export interface Sponsor {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Tech to be included in tech stack for open source projects
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-stack".
+ */
+export interface TechStack {
+  id: string;
+  'tech-name': string;
+  /**
+   * Hex code of the color in the form #XXXXXX
+   */
+  color: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  /**
+   * If not already done so upload desired image to Media collection, This is the logo of the company
+   */
+  image?: (string | null) | Media;
+  'github link'?: string | null;
+  'website link'?: string | null;
+  'text stack': (string | TechStack)[];
+  active: 'true' | 'false';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -249,6 +288,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sponsors';
         value: string | Sponsor;
+      } | null)
+    | ({
+        relationTo: 'tech-stack';
+        value: string | TechStack;
+      } | null)
+    | ({
+        relationTo: 'Projects';
+        value: string | Project;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -365,6 +412,31 @@ export interface SponsorsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-stack_select".
+ */
+export interface TechStackSelect<T extends boolean = true> {
+  'tech-name'?: T;
+  color?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  'github link'?: T;
+  'website link'?: T;
+  'text stack'?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
