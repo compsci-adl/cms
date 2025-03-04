@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload';
+import { isAdmin } from '@/access/isAdmin';
+import { isOpenSource } from '@/access/isOpenSource';
 
 export const Projects: CollectionConfig = {
     slug: 'Projects',
@@ -23,11 +25,13 @@ export const Projects: CollectionConfig = {
         },
         {
             name: 'github link',
-            type: 'text'
+            type: 'text',
+            required: false,
         },
         {
             name: 'website link',
             type: 'text',
+            required: false,
         },
         {
             name: 'text stack',
@@ -46,4 +50,12 @@ export const Projects: CollectionConfig = {
             required: true
         }
     ],
+    access: {
+        create: isAdmin || isOpenSource,
+        update: isAdmin || isOpenSource,
+        delete: isAdmin || isOpenSource,
+        read: () => {
+            return true;
+        },
+    },
 }
