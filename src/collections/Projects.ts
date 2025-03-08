@@ -3,7 +3,7 @@ import { isAdmin } from '@/access/isAdmin';
 import { isOpenSource } from '@/access/isOpenSource';
 
 export const Projects: CollectionConfig = {
-    slug: 'Projects',
+    slug: 'projects',
     fields: [
         {
             name: 'title',
@@ -34,7 +34,7 @@ export const Projects: CollectionConfig = {
             required: false,
         },
         {
-            name: 'text stack',
+            name: 'techStack',
             type: 'relationship',
             relationTo: 'tech-stack',
             hasMany: true,

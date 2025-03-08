@@ -70,7 +70,7 @@ export interface Config {
     events: Event;
     sponsors: Sponsor;
     'tech-stack': TechStack;
-    Projects: Project;
+    projects: Project;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,7 +82,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
-    Projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -249,7 +249,7 @@ export interface TechStack {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Projects".
+ * via the `definition` "projects".
  */
 export interface Project {
   id: string;
@@ -261,7 +261,7 @@ export interface Project {
   image?: (string | null) | Media;
   'github link'?: string | null;
   'website link'?: string | null;
-  'text stack': (string | TechStack)[];
+  techStack: (string | TechStack)[];
   active: 'true' | 'false';
   updatedAt: string;
   createdAt: string;
@@ -294,7 +294,7 @@ export interface PayloadLockedDocument {
         value: string | TechStack;
       } | null)
     | ({
-        relationTo: 'Projects';
+        relationTo: 'projects';
         value: string | Project;
       } | null);
   globalSlug?: string | null;
@@ -425,7 +425,7 @@ export interface TechStackSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Projects_select".
+ * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
@@ -433,7 +433,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   image?: T;
   'github link'?: T;
   'website link'?: T;
-  'text stack'?: T;
+  techStack?: T;
   active?: T;
   updatedAt?: T;
   createdAt?: T;

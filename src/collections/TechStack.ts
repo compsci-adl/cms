@@ -27,14 +27,8 @@ export const tech_stack: CollectionConfig = {
         create: isAdmin || isOpenSource,
         update: isAdmin || isOpenSource,
         delete: isAdmin || isOpenSource,
-        read: ({ req }) => {
-            if (req.user) return true;
-
-            return {
-                _status: {
-                    equals: 'published',
-                },
-            };
+        read: () => {
+            return true;
         }
     },
 }
