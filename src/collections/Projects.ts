@@ -24,12 +24,12 @@ export const Projects: CollectionConfig = {
             },
         },
         {
-            name: 'github link',
+            name: 'githubLink',
             type: 'text',
             required: false,
         },
         {
-            name: 'website link',
+            name: 'websiteLink',
             type: 'text',
             required: false,
         },
@@ -39,6 +39,9 @@ export const Projects: CollectionConfig = {
             relationTo: 'tech-stack',
             hasMany: true,
             required: true,
+            admin: {
+                
+            }
         }, 
         {
             name: 'active',

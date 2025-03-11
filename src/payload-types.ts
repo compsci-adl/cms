@@ -259,8 +259,8 @@ export interface Project {
    * If not already done so upload desired image to Media collection, This is the logo of the company
    */
   image?: (string | null) | Media;
-  'github link'?: string | null;
-  'website link'?: string | null;
+  githubLink?: string | null;
+  websiteLink?: string | null;
   techStack: (string | TechStack)[];
   active: 'true' | 'false';
   updatedAt: string;
@@ -431,8 +431,8 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
-  'github link'?: T;
-  'website link'?: T;
+  githubLink?: T;
+  websiteLink?: T;
   techStack?: T;
   active?: T;
   updatedAt?: T;
