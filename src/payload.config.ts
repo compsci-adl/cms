@@ -12,6 +12,7 @@ import { Sponsors } from './collections/Sponsors';
 import { tech_stack } from './collections/TechStack';
 import { Projects } from './collections/Projects';
 
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 

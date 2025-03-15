@@ -6,6 +6,7 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+
 /**
  * Supported timezones in IANA format.
  *
@@ -59,7 +60,6 @@ export type SupportedTimezones =
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
   | 'Pacific/Fiji';
-
 export interface Config {
   auth: {
     users: UserAuthOperations;
@@ -71,6 +71,7 @@ export interface Config {
     sponsors: Sponsor;
     'tech-stack': TechStack;
     projects: Project;
+
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
