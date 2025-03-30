@@ -20,7 +20,7 @@ export const Projects: CollectionConfig = {
             type: 'relationship',
             relationTo: 'media',
             admin: {
-                description: 'If not already done so upload desired image to Media collection, This is the logo of the company',
+                description: 'If not already done so upload desired image to Media collection, This is the logo of the project',
             },
         },
         {
@@ -40,7 +40,7 @@ export const Projects: CollectionConfig = {
             hasMany: true,
             required: true,
             admin: {
-                
+                description: 'Ensure all tech stacks required for project are added accordingly.'
             }
         }, 
         {
