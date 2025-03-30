@@ -5,6 +5,15 @@ import { bool } from 'sharp';
 export const Media: CollectionConfig = {
     // Collection for media uploads
     slug: 'media',
+    // Upload svg's as svg type not xml
+    upload: {
+        modifyResponseHeaders({ headers }) {
+          if (headers.get('content-type') === 'application/xml') {
+            headers.set('content-type', 'image/svg+xml; charset=utf-8')
+          }
+          return headers
+        },
+    },
     access: {
         read: () => true,
         delete: isAdmin,
@@ -25,5 +34,4 @@ export const Media: CollectionConfig = {
             },
         },
     ],
-    upload: true,
 };
