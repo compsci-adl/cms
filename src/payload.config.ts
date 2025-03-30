@@ -22,7 +22,10 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-  },  
+  },
+  routes: {
+    admin: '/',
+  },
   cors: [process.env.FRONTEND_URL || ''],
   collections: [Users, Media, Events, Sponsors, tech_stack, Projects], // Include any new collections here
   editor: lexicalEditor(),
