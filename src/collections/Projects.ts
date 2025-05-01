@@ -19,6 +19,12 @@ export const Projects: CollectionConfig = {
             name: 'image',
             type: 'relationship',
             relationTo: 'media',
+            filterOptions: () => ({
+                type: {
+                    equals: 'project',
+                }
+
+            }),
             admin: {
                 description: 'If not already done so upload desired image to Media collection, This is the logo of the project',
             },
@@ -39,12 +45,6 @@ export const Projects: CollectionConfig = {
             relationTo: 'tech-stack',
             hasMany: true,
             required: true,
-            filterOptions: () => ({
-                type: {
-                    equals: 'project',
-                }
-
-            }),
             admin: {
                 description: 'Ensure all tech stacks required for project are added accordingly.'
             }
