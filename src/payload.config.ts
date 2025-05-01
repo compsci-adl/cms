@@ -9,7 +9,7 @@ import { Events } from './collections/Events';
 import { Media } from './collections/Media';
 import { Users } from './collections/Users';
 import { Sponsors } from './collections/Sponsors';
-import { tech_stack } from './collections/TechStack';
+import { Tech_Stack } from './collections/TechStack';
 import { Projects } from './collections/Projects';
 
 
@@ -27,7 +27,7 @@ export default buildConfig({
     admin: '/',
   },
   cors: [process.env.FRONTEND_URL || ''],
-  collections: [Users, Media, Events, Sponsors, tech_stack, Projects], // Include any new collections here
+  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

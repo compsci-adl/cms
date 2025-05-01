@@ -33,5 +33,23 @@ export const Media: CollectionConfig = {
                 description: 'Please include alt name for file',
             },
         },
+        {
+            name: 'type',
+            type: 'radio',
+            options: [
+                {
+                    label: 'Project',
+                    value: 'project',
+                },
+                {
+                    label: 'Sponsors',
+                    value: 'sponsor',
+                },
+                {
+                    label: 'Events',
+                    value: 'event',
+                }
+            ],
+        },
     ],
 };

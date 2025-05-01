@@ -150,6 +150,7 @@ export interface Media {
    * Please include alt name for file
    */
   alt: string;
+  type?: ('project' | 'sponsor' | 'event') | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -256,13 +257,16 @@ export interface Project {
   title: string;
   description: string;
   /**
-   * If not already done so upload desired image to Media collection, This is the logo of the company
+   * If not already done so upload desired image to Media collection, This is the logo of the project
    */
   image?: (string | null) | Media;
   githubLink?: string | null;
   websiteLink?: string | null;
+  /**
+   * Ensure all tech stacks required for project are added accordingly.
+   */
   techStack: (string | TechStack)[];
-  active: 'true' | 'false';
+  isCurrent: 'true' | 'false';
   updatedAt: string;
   createdAt: string;
 }
@@ -361,6 +365,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -434,7 +439,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   githubLink?: T;
   websiteLink?: T;
   techStack?: T;
-  active?: T;
+  isCurrent?: T;
   updatedAt?: T;
   createdAt?: T;
 }

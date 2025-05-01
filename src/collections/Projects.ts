@@ -39,12 +39,18 @@ export const Projects: CollectionConfig = {
             relationTo: 'tech-stack',
             hasMany: true,
             required: true,
+            filterOptions: () => ({
+                type: {
+                    equals: 'project',
+                }
+
+            }),
             admin: {
                 description: 'Ensure all tech stacks required for project are added accordingly.'
             }
         }, 
         {
-            name: 'active',
+            name: 'isCurrent',
             type: 'radio',
             options: [
                 'true',

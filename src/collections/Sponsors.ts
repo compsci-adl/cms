@@ -57,6 +57,12 @@ export const Sponsors: CollectionConfig = {
             name: 'logo',
             type: 'relationship',
             relationTo: 'media',
+            filterOptions: () => ({
+                type: {
+                    equals: 'sponsor',
+                }
+
+            }),
             required: true,
             admin: {
                 description: 'If not already done so upload desired image to Media collection, This is the logo of the company',

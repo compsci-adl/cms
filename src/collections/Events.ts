@@ -73,6 +73,12 @@ export const Events: CollectionConfig = {
             type: 'relationship',
             relationTo: 'media',
             required: true,
+            filterOptions: () => ({
+                type: {
+                    equals: 'event',
+                }
+
+            }),
             admin: {
                 description: 'If not already done so upload desired image to Media collection',
             },

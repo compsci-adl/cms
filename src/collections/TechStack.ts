@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload';
 import { isAdmin } from '@/access/isAdmin';
 import { isOpenSource } from '@/access/isOpenSource';
 
-export const tech_stack: CollectionConfig = {
+export const Tech_Stack: CollectionConfig = {
     slug: 'tech-stack', 
     admin: {
         useAsTitle: 'tech-name',
