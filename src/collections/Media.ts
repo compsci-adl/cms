@@ -1,6 +1,8 @@
 import { isAdmin } from '@/access/isAdmin';
 import { type CollectionConfig, type Access, accessOperation } from 'payload';
-import { bool } from 'sharp';
+import sharp from 'sharp';
+import fs from 'fs/promises';
+import path from 'path';
 
 export const Media: CollectionConfig = {
     // Collection for media uploads
@@ -23,6 +25,43 @@ export const Media: CollectionConfig = {
         create: ({ req: { user } }) => {
             return Boolean(user);
         },
+    },
+    hooks: {
+        afterChange: [
+            async ({doc, req}) => {
+                // Only convert jpg, jpeg and png
+                const filename: string = doc.filename;
+                const fileExt = path.extname(filename).toLowerCase();
+                const validExts = ['.jpg', '.jpeg', '.png'];
+
+                if (!validExts.includes(fileExt)) return;
+
+                const mediaDir = path.resolve(process.cwd(), 'media');
+                const inputPath = path.join(mediaDir, filename);
+                const webpFilename = filename.replace(/\.[^.]+$/, '.webp');
+                const outputPath = path.join(mediaDir, webpFilename);
+
+                try {
+                    // Convert to webp
+                    await sharp(inputPath)
+                      .webp({ quality: 80 })
+                      .toFile(outputPath);
+    
+          
+                    // Update the document in the database to reflect the new filename
+                    await req.payload.update({
+                      collection: 'media',
+                      id: doc.id,
+                      data: {
+                        filename: webpFilename,
+                        mimeType: 'image/webp',
+                      },
+                    });
+                  } catch (error) {
+                    console.error('Error converting image to WebP:', error);
+                  }
+            }
+        ],
     },
     fields: [
         {
