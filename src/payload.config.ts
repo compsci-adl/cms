@@ -12,7 +12,6 @@ import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Projects } from './collections/Projects';
 
-
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -45,7 +44,7 @@ export default buildConfig({
 
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
-      const newUser = await payload.create({
+      const _newUser = await payload.create({
         collection: 'users',
         data: {
           email: process.env.ROOT_EMAIL?.toString() || '',

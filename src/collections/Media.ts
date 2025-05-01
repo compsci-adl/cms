@@ -1,7 +1,6 @@
 import { isAdmin } from '@/access/isAdmin';
-import { type CollectionConfig, type Access, accessOperation } from 'payload';
+import { type CollectionConfig } from 'payload';
 import sharp from 'sharp';
-import fs from 'fs/promises';
 import path from 'path';
 
 export const Media: CollectionConfig = {
@@ -46,7 +45,6 @@ export const Media: CollectionConfig = {
                     await sharp(inputPath)
                       .webp({ quality: 80 })
                       .toFile(outputPath);
-    
           
                     // Update the document in the database to reflect the new filename
                     await req.payload.update({
