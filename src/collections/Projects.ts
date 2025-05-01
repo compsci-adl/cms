@@ -67,4 +67,7 @@ export const Projects: CollectionConfig = {
             return true;
         },
     },
+    versions: {
+        drafts: true,
+    },
 }
