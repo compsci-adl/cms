@@ -11,6 +11,8 @@ import { Users } from './collections/Users';
 import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Projects } from './collections/Projects';
+import { authjsPlugin } from "payload-authjs";
+import { authConfig } from "./auth.config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -36,6 +38,11 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
+  plugins: [
+    authjsPlugin({
+      authjsConfig: authConfig,
+    }),
+  ],
   onInit: async (payload) => {
     const adminUsers = await payload.find({
       collection: 'users',
