@@ -1,4 +1,4 @@
-import { Access, Field, FieldAccess } from 'payload';
+import { Access, FieldAccess } from 'payload';
 import { User } from '../payload-types';
 
 export const isSponsorship: Access<User> = ({ req: { user } }) => {

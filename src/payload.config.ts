@@ -8,6 +8,9 @@ import { fileURLToPath } from 'url';
 import { Events } from './collections/Events';
 import { Media } from './collections/Media';
 import { Users } from './collections/Users';
+import { Sponsors } from './collections/Sponsors';
+import { Tech_Stack } from './collections/TechStack';
+import { Projects } from './collections/Projects';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -18,9 +21,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-  },  
+  },
+  routes: {
+    admin: '/',
+  },
   cors: [process.env.FRONTEND_URL || ''],
-  collections: [Users, Media, Events], // Include any new collections here
+  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -38,7 +44,7 @@ export default buildConfig({
 
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
-      const newUser = await payload.create({
+      const _newUser = await payload.create({
         collection: 'users',
         data: {
           email: process.env.ROOT_EMAIL?.toString() || '',
