@@ -3,4 +3,5 @@ import Keycloak from 'next-auth/providers/keycloak';
 
 export const authConfig: NextAuthConfig = {
   providers: [Keycloak],
+  trustHost: true,
 };
