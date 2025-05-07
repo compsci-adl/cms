@@ -23,4 +23,4 @@ jobs:
       - name: Build Docker container
         run: |
           docker buildx build \
-            --file=Dockerfile -t cms.
+            --file=Dockerfile -t cms . 
