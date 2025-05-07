@@ -1,13 +1,9 @@
 services:
   payload:
-    image: node:20-alpine
+    image: cms:latest
+    container_name: cms
     ports:
       - '4000:4000'
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
-    working_dir: /home/node/app/
-    command: sh -c "npm install -g pnpm@9 && pnpm install && pnpm dev"
     depends_on:
       - mongo
     env_file:
@@ -31,7 +27,6 @@ services:
 
 volumes:
   data:
-  node_modules:
 
 networks:
   csclub:
