@@ -17,6 +17,14 @@ import { Users } from './collections/Users';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+type Role = 'admin' | 'events' | 'openSource' | 'sponsorships';
+
+interface AdminUserInput {
+  email: string;
+  password: string;
+  roles: Role[];
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -51,13 +59,18 @@ export default buildConfig({
 
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
-      const _newUser = await payload.create({
+      const rootEmail = process.env.ROOT_EMAIL?.toString() || '';
+      const rootPass = process.env.ROOT_PASS?.toString() || '';
+
+      const newUser: AdminUserInput = {
+        email: rootEmail,
+        password: rootPass,
+        roles: ['admin'],
+      };
+
+      await payload.create({
         collection: 'users',
-        data: {
-          email: process.env.ROOT_EMAIL?.toString() || '',
-          password: process.env.ROOT_PASS?.toString() || '',
-          roles: ['admin'],
-        },
+        data: newUser,
       });
     }
   },
