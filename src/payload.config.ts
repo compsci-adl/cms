@@ -3,19 +3,27 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { buildConfig } from 'payload';
+import { authjsPlugin } from 'payload-authjs';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
+import { authConfig } from './auth.config';
 import { Events } from './collections/Events';
 import { Media } from './collections/Media';
-import { Users } from './collections/Users';
+import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
-import { Projects } from './collections/Projects';
-import { authjsPlugin } from "payload-authjs";
-import { authConfig } from "./auth.config";
+import { Users } from './collections/Users';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+type Role = 'admin' | 'events' | 'openSource' | 'sponsorships';
+
+interface AdminUserInput {
+  email: string;
+  password: string;
+  roles: Role[];
+}
 
 export default buildConfig({
   admin: {
@@ -51,13 +59,18 @@ export default buildConfig({
 
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
-      const _newUser = await payload.create({
+      const rootEmail = process.env.ROOT_EMAIL?.toString() || '';
+      const rootPass = process.env.ROOT_PASS?.toString() || '';
+
+      const newUser: AdminUserInput = {
+        email: rootEmail,
+        password: rootPass,
+        roles: ['admin'],
+      };
+
+      await payload.create({
         collection: 'users',
-        data: {
-          email: process.env.ROOT_EMAIL?.toString() || '',
-          password: process.env.ROOT_PASS?.toString() || '',
-          roles: ['admin'],
-        },
+        data: newUser,
       });
     }
   },

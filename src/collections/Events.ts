@@ -36,8 +36,8 @@ export const Events: CollectionConfig = {
                     type: 'date',
                     admin: {
                         date: {
-                            pickerAppearance: 'timeOnly'
-                        }
+                            pickerAppearance: 'timeOnly',
+                        },
                     },
                     required: true,
                 },
@@ -46,11 +46,11 @@ export const Events: CollectionConfig = {
                     type: 'date',
                     admin: {
                         date: {
-                            pickerAppearance: 'timeOnly'
-                        }
+                            pickerAppearance: 'timeOnly',
+                        },
                     },
                     required: true,
-                }
+                },
             ],
         },
         {
@@ -76,8 +76,7 @@ export const Events: CollectionConfig = {
             filterOptions: () => ({
                 type: {
                     equals: 'event',
-                }
-
+                },
             }),
             admin: {
                 description: 'If not already done so upload desired image to Media collection',

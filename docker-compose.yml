@@ -29,11 +29,10 @@ services:
     networks:
       - csclub
 
-
 volumes:
   data:
   node_modules:
-  
+
 networks:
   csclub:
     external: true

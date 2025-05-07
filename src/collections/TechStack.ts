@@ -1,12 +1,12 @@
-import type { CollectionConfig } from 'payload';
 import { isAdmin } from '@/access/isAdmin';
 import { isOpenSource } from '@/access/isOpenSource';
+import type { CollectionConfig } from 'payload';
 
 export const Tech_Stack: CollectionConfig = {
-    slug: 'tech-stack', 
+    slug: 'tech-stack',
     admin: {
         useAsTitle: 'tech-name',
-        description: 'Tech to be included in tech stack for open source projects'
+        description: 'Tech to be included in tech stack for open source projects',
     },
     fields: [
         {
@@ -20,8 +20,8 @@ export const Tech_Stack: CollectionConfig = {
             required: true,
             admin: {
                 description: 'Hex code of the color in the form #XXXXXX',
-            }
-        }
+            },
+        },
     ],
     access: {
         create: isAdmin || isOpenSource,
@@ -29,6 +29,6 @@ export const Tech_Stack: CollectionConfig = {
         delete: isAdmin || isOpenSource,
         read: () => {
             return true;
-        }
+        },
     },
-}
+};

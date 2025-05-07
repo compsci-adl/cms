@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload';
 import { isAdmin } from '@/access/isAdmin';
 import { isOpenSource } from '@/access/isOpenSource';
+import type { CollectionConfig } from 'payload';
 
 export const Projects: CollectionConfig = {
     slug: 'projects',
@@ -22,11 +22,11 @@ export const Projects: CollectionConfig = {
             filterOptions: () => ({
                 type: {
                     equals: 'project',
-                }
-
+                },
             }),
             admin: {
-                description: 'If not already done so upload desired image to Media collection, This is the logo of the project',
+                description:
+                    'If not already done so upload desired image to Media collection, This is the logo of the project',
             },
         },
         {
@@ -46,18 +46,15 @@ export const Projects: CollectionConfig = {
             hasMany: true,
             required: true,
             admin: {
-                description: 'Ensure all tech stacks required for project are added accordingly.'
-            }
-        }, 
+                description: 'Ensure all tech stacks required for project are added accordingly.',
+            },
+        },
         {
             name: 'isCurrent',
             type: 'radio',
-            options: [
-                'true',
-                'false'
-            ], 
-            required: true
-        }
+            options: ['true', 'false'],
+            required: true,
+        },
     ],
     access: {
         create: isAdmin || isOpenSource,
@@ -70,4 +67,4 @@ export const Projects: CollectionConfig = {
     versions: {
         drafts: true,
     },
-}
+};

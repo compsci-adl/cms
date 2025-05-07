@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload';
 import { isAdmin } from '@/access/isAdmin';
 import { isSponsorship } from '@/access/isSponsorships';
+import type { CollectionConfig } from 'payload';
 
 export const Sponsors: CollectionConfig = {
     // Collection for sponsors
@@ -24,13 +24,13 @@ export const Sponsors: CollectionConfig = {
             required: true,
             admin: {
                 description: 'Description of the company as obtained from representatives',
-            }
+            },
         },
         {
             name: 'website link',
             type: 'text',
             admin: {
-                description: 'Link to the company\'s website'
+                description: "Link to the company's website",
             },
             required: false,
         },
@@ -40,15 +40,15 @@ export const Sponsors: CollectionConfig = {
             options: [
                 {
                     label: 'Gold',
-                    value: 'gold'
+                    value: 'gold',
                 },
                 {
                     label: 'Silver',
-                    value: 'silver'
+                    value: 'silver',
                 },
                 {
                     label: 'Bronze',
-                    value: 'bronze'
+                    value: 'bronze',
                 },
             ],
             required: true,
@@ -60,12 +60,12 @@ export const Sponsors: CollectionConfig = {
             filterOptions: () => ({
                 type: {
                     equals: 'sponsor',
-                }
-
+                },
             }),
             required: true,
             admin: {
-                description: 'If not already done so upload desired image to Media collection, This is the logo of the company',
+                description:
+                    'If not already done so upload desired image to Media collection, This is the logo of the company',
             },
         },
     ],
@@ -87,4 +87,4 @@ export const Sponsors: CollectionConfig = {
     versions: {
         drafts: true,
     },
-}
+};
