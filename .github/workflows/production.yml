@@ -42,11 +42,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
+      - name: Echo environment variables to .env
+        run: |
+          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+
       - name: Build Docker container
         env:
           PRODUCTION_BUILD: 'true'
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         run: |
           docker buildx build \
+          --secret id=FRONTEND_URL \
           --cache-from=type=local,src=/tmp/.buildx-cache \
           --cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max \
           --output type=docker,dest=cms.tar \
