@@ -35,7 +35,12 @@ export default buildConfig({
   routes: {
     admin: '/',
   },
-  cors: [process.env.FRONTEND_URL || ''],
+  cors: [
+    process.env.FRONTEND_URL || '',
+    process.env.FRONTEND_URL?.startsWith('https')
+      ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
+      : '',
+  ].filter(Boolean),
   collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
