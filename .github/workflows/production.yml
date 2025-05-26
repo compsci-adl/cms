@@ -45,6 +45,10 @@ jobs:
       - name: Echo environment variables to .env
         run: |
           echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+          echo "S3_BUCKET=${{ env.S3_BUCKET }}" >> .env
+          echo "S3_ACCESS_KEY_ID=${{ secrets.S3_ACCESS_KEY_ID }}" >> .env
+          echo "S3_SECRET_ACCESS_KEY=${{ secrets.S3_SECRET_ACCESS_KEY }}" >> .env
+          echo "S3_REGION=${{ env.S3_REGION }}" >> .env
 
       - name: Build Docker container
         env:

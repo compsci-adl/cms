@@ -17,10 +17,13 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 4000"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.817.0",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/storage-s3": "latest",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "axios": "^1.9.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "graphql": "^16.11.0",
@@ -36,8 +39,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@types/node": "^22.15.18",
-    "@types/react": "^19.1.4",
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2",
