@@ -130,6 +130,10 @@ export const Media: CollectionConfig = {
                     label: 'Events',
                     value: 'event',
                 },
+                {
+                    label: 'Gallery',
+                    value: 'gallery',
+                },
             ],
         },
     ],
