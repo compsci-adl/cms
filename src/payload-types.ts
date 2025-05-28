@@ -93,8 +93,12 @@ export interface Config {
     db: {
         defaultIDType: string;
     };
-    globals: {};
-    globalsSelect: {};
+    globals: {
+        notification: Notification;
+    };
+    globalsSelect: {
+        notification: NotificationSelect<false> | NotificationSelect<true>;
+    };
     locale: null;
     user: User & {
         collection: 'users';
@@ -125,18 +129,22 @@ export interface UserAuthOperations {
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users". */
 export interface User {
     id: string;
+    email: string;
+    emailVerified?: string | null;
+    name?: string | null;
+    image?: string | null;
     /** Users can have one or many roles */
     roles?: ('admin' | 'openSource' | 'events' | 'sponsorships')[] | null;
+    accounts?:
+        | {
+              id?: string | null;
+              provider: string;
+              providerAccountId: string;
+              type: string;
+          }[]
+        | null;
     updatedAt: string;
     createdAt: string;
-    email: string;
-    resetPasswordToken?: string | null;
-    resetPasswordExpiration?: string | null;
-    salt?: string | null;
-    hash?: string | null;
-    loginAttempts?: number | null;
-    lockUntil?: string | null;
-    password?: string | null;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media". */
 export interface Media {
@@ -315,16 +323,22 @@ export interface PayloadMigration {
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users_select". */
 export interface UsersSelect<T extends boolean = true> {
+    id?: T;
+    email?: T;
+    emailVerified?: T;
+    name?: T;
+    image?: T;
     roles?: T;
+    accounts?:
+        | T
+        | {
+              id?: T;
+              provider?: T;
+              providerAccountId?: T;
+              type?: T;
+          };
     updatedAt?: T;
     createdAt?: T;
-    email?: T;
-    resetPasswordToken?: T;
-    resetPasswordExpiration?: T;
-    salt?: T;
-    hash?: T;
-    loginAttempts?: T;
-    lockUntil?: T;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media_select". */
 export interface MediaSelect<T extends boolean = true> {
@@ -427,6 +441,35 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
     batch?: T;
     updatedAt?: T;
     createdAt?: T;
+}
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "notification". */
+export interface Notification {
+    id: string;
+    enabled: boolean;
+    type?: ('banner' | 'popup') | null;
+    text?: string | null;
+    url?: string | null;
+    urlText?: string | null;
+    leftImage?: (string | null) | Media;
+    rightImage?: (string | null) | Media;
+    updatedAt?: string | null;
+    createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "notification_select".
+ */
+export interface NotificationSelect<T extends boolean = true> {
+    enabled?: T;
+    type?: T;
+    text?: T;
+    url?: T;
+    urlText?: T;
+    leftImage?: T;
+    rightImage?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    globalType?: T;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "auth". */
 export interface Auth {
