@@ -72,6 +72,7 @@ export interface Config {
         sponsors: Sponsor;
         'tech-stack': TechStack;
         projects: Project;
+        gallery: Gallery;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
@@ -84,6 +85,7 @@ export interface Config {
         sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
         'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
+        gallery: GallerySelect<false> | GallerySelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
             | PayloadLockedDocumentsSelect<true>;
@@ -150,7 +152,7 @@ export interface User {
 export interface Media {
     id: string;
     /** Please include alt name for file */
-    alt: string;
+    alt?: string | null;
     type?: ('project' | 'sponsor' | 'event' | 'gallery') | null;
     updatedAt: string;
     createdAt: string;
@@ -248,6 +250,17 @@ export interface Project {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "gallery". */
+export interface Gallery {
+    id: string;
+    eventName: string;
+    eventDate: string;
+    /** Select or upload photos to the Media collection. Make sure they are tagged as type "gallery". */
+    images: (string | Media)[];
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema via the `definition`
  * "payload-locked-documents".
@@ -278,6 +291,10 @@ export interface PayloadLockedDocument {
         | ({
               relationTo: 'projects';
               value: string | Project;
+          } | null)
+        | ({
+              relationTo: 'gallery';
+              value: string | Gallery;
           } | null);
     globalSlug?: string | null;
     user: {
@@ -406,6 +423,15 @@ export interface ProjectsSelect<T extends boolean = true> {
     websiteLink?: T;
     techStack?: T;
     isCurrent?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "gallery_select". */
+export interface GallerySelect<T extends boolean = true> {
+    eventName?: T;
+    eventDate?: T;
+    images?: T;
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
