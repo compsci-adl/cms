@@ -8,6 +8,7 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
 import { Events } from './collections/Events';
+import { Gallery } from './collections/Gallery';
 import { Media } from './collections/Media';
 import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
@@ -43,7 +44,7 @@ export default buildConfig({
       ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
       : '',
   ].filter(Boolean),
-  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects], // Include any new collections here
+  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects, Gallery], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
