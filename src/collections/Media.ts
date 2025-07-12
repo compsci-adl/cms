@@ -72,8 +72,29 @@ export const Media: CollectionConfig = {
 
                     const originalBuffer = await streamToBuffer(s3Response.Body as Readable);
 
-                    // Convert image to WebP buffer
-                    const webpBuffer = await sharp(originalBuffer).webp({ quality: 80 }).toBuffer();
+                    // Resize and convert to WebP
+                    const webpBuffer = await sharp(originalBuffer)
+                        .resize({
+                            width: 1600,
+                            height: 1600,
+                            fit: 'inside',
+                            withoutEnlargement: true,
+                        })
+                        .webp({ quality: 75 })
+                        .toBuffer();
+
+                    if (!webpBuffer || webpBuffer.length === 0) {
+                        console.error('Failed to create resized image');
+                        return;
+                    }
+
+                    // Get metadata from resized WebP image
+                    const resizedMetadata = await sharp(webpBuffer).metadata();
+                    const dimensions = {
+                        width: resizedMetadata.width || null,
+                        height: resizedMetadata.height || null,
+                        filesize: webpBuffer.length,
+                    };
 
                     // New WebP filename
                     const webpFilename = filename.replace(/\.[^.]+$/, '.webp');
@@ -97,6 +118,9 @@ export const Media: CollectionConfig = {
                         data: {
                             filename: webpFilename,
                             mimeType: 'image/webp',
+                            width: dimensions.width,
+                            height: dimensions.height,
+                            filesize: dimensions.filesize,
                         },
                     });
                 } catch (error) {
