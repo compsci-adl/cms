@@ -1,9 +1,15 @@
 import { isAdmin } from '@/access/isAdmin';
-import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+    S3Client,
+    GetObjectCommand,
+    PutObjectCommand,
+    HeadObjectCommand,
+} from '@aws-sdk/client-s3';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import path from 'path';
 import { type CollectionConfig } from 'payload';
 import sharp from 'sharp';
+import slugify from 'slugify';
 import { Readable } from 'stream';
 
 const s3Client = new S3Client({
@@ -21,6 +27,16 @@ function streamToBuffer(stream: Readable): Promise<Buffer> {
         stream.on('end', () => resolve(Buffer.concat(chunks)));
         stream.on('error', reject);
     });
+}
+
+// Check if an object with this key already exists in S3
+async function keyExists(bucket: string, key: string): Promise<boolean> {
+    try {
+        await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 export const Media: CollectionConfig = {
@@ -57,10 +73,10 @@ export const Media: CollectionConfig = {
 
                 if (!validExts.includes(fileExt)) return;
 
-                try {
-                    const bucket = process.env.S3_BUCKET || '';
-                    const key = filename;
+                const bucket = process.env.S3_BUCKET || '';
+                const key = filename;
 
+                try {
                     // Download original file from S3
                     const getObjectCommand = new GetObjectCommand({ Bucket: bucket, Key: key });
                     const s3Response = await s3Client.send(getObjectCommand);
@@ -83,30 +99,37 @@ export const Media: CollectionConfig = {
                         .webp({ quality: 75 })
                         .toBuffer();
 
-                    if (!webpBuffer || webpBuffer.length === 0) {
-                        console.error('Failed to create resized image');
-                        return;
-                    }
-
                     // Get metadata from resized WebP image
-                    const resizedMetadata = await sharp(webpBuffer).metadata();
+                    const metadata = await sharp(webpBuffer).metadata();
                     const dimensions = {
-                        width: resizedMetadata.width || null,
-                        height: resizedMetadata.height || null,
+                        width: metadata.width || null,
+                        height: metadata.height || null,
                         filesize: webpBuffer.length,
                     };
 
-                    // New WebP filename
-                    const webpFilename = filename.replace(/\.[^.]+$/, '.webp');
+                    // Determine new filename
+                    let baseName = filename.replace(/\.[^.]+$/, ''); // default fallback
+                    if (doc.type === 'gallery' && doc.eventName) {
+                        baseName = slugify(doc.eventName, { lower: true, strict: true });
+                    }
 
-                    // Upload WebP image back to S3
-                    const putObjectCommand = new PutObjectCommand({
-                        Bucket: bucket,
-                        Key: webpFilename,
-                        Body: webpBuffer,
-                        ContentType: 'image/webp',
-                    });
-                    await s3Client.send(putObjectCommand);
+                    let newFilename = `${baseName}.webp`;
+                    let counter = 1;
+
+                    while (await keyExists(bucket, newFilename)) {
+                        newFilename = `${baseName}-${counter}.webp`;
+                        counter++;
+                    }
+
+                    // Upload new image to S3
+                    await s3Client.send(
+                        new PutObjectCommand({
+                            Bucket: bucket,
+                            Key: newFilename,
+                            Body: webpBuffer,
+                            ContentType: 'image/webp',
+                        })
+                    );
 
                     // Delete original file from S3
                     await s3Client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
@@ -116,7 +139,7 @@ export const Media: CollectionConfig = {
                         collection: 'media',
                         id: doc.id,
                         data: {
-                            filename: webpFilename,
+                            filename: newFilename,
                             mimeType: 'image/webp',
                             width: dimensions.width,
                             height: dimensions.height,
@@ -124,7 +147,7 @@ export const Media: CollectionConfig = {
                         },
                     });
                 } catch (error) {
-                    console.error('Error converting image to WebP and uploading to S3:', error);
+                    console.error('Error processing image:', error);
                 }
             },
         ],
@@ -159,6 +182,16 @@ export const Media: CollectionConfig = {
                     value: 'gallery',
                 },
             ],
+        },
+        {
+            name: 'eventName',
+            type: 'text',
+            required: false,
+            admin: {
+                condition: (_, siblingData) => siblingData?.type === 'gallery',
+                description:
+                    'Used to name gallery images. Format should be "Event Name S1 2025" or "Event Name 2025".',
+            },
         },
     ],
 };
