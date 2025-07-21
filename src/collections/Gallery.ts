@@ -1,5 +1,6 @@
 import { isAdmin } from '@/access/isAdmin';
 import type { CollectionConfig } from 'payload';
+import slugify from 'slugify';
 
 export const Gallery: CollectionConfig = {
     slug: 'gallery',
@@ -28,18 +29,56 @@ export const Gallery: CollectionConfig = {
             type: 'relationship',
             relationTo: 'media',
             hasMany: true,
-            required: true,
+            required: false,
             filterOptions: () => ({
                 type: {
                     equals: 'gallery',
                 },
             }),
             admin: {
+                readOnly: true,
                 description:
-                    'Select or upload photos to the Media collection. Make sure they are tagged as type "gallery".',
+                    'Automatically populated with media where filename matches the event name.',
             },
         },
     ],
+    hooks: {
+        beforeChange: [
+            async ({ data, req }) => {
+                const eventName = data.eventName;
+                if (!eventName) return data;
+
+                const slug = slugify(eventName, { lower: true, strict: true });
+
+                console.log(`Slugified event name: ${slug}`);
+                // Find matching media
+                const mediaResults = await req.payload.find({
+                    collection: 'media',
+                    where: {
+                        and: [
+                            {
+                                filename: {
+                                    like: `${slug}`,
+                                },
+                            },
+                            {
+                                type: {
+                                    equals: 'gallery',
+                                },
+                            },
+                        ],
+                    },
+                    limit: 1000,
+                });
+
+                if (mediaResults && mediaResults.docs) {
+                    data.images = mediaResults.docs.map((doc) => doc.id);
+                }
+
+                return data;
+            },
+        ],
+    },
     access: {
         create: isAdmin,
         update: isAdmin,
