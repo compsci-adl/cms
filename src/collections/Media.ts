@@ -163,7 +163,7 @@ export const Media: CollectionConfig = {
         },
         {
             name: 'type',
-            type: 'radio',
+            type: 'select',
             options: [
                 {
                     label: 'Project',
