@@ -71,8 +71,6 @@ export const Gallery: CollectionConfig = {
                     limit: 1000,
                 });
 
-                console.log(`Found ${mediaResults?.totalDocs || 0} media items for event: ${eventName}`);
-
                 if (mediaResults && mediaResults.docs) {
                     data.images = mediaResults.docs.map((doc) => doc.id);
                 }
