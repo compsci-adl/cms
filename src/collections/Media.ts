@@ -134,9 +134,9 @@ if (s3Client) {
             // Only convert jpg, jpeg and png
             if (operation !== 'create') return; // Only process newly created uploads
 
-            const filename: string = doc.filename;
-            const fileExt = path.extname(filename).toLowerCase();
-            const validExts = ['.jpg', '.jpeg', '.png'];
+                const filename: string = doc.filename;
+                const fileExt = path.extname(filename).toLowerCase();
+                const validExts = ['.jpg', '.jpeg', '.png', '.webp'];
 
             if (!validExts.includes(fileExt)) return;
 
@@ -153,40 +153,61 @@ if (s3Client) {
                     return;
                 }
 
-                const originalBuffer = await streamToBuffer(s3Response.Body as Readable);
+                    const originalBuffer = await streamToBuffer(s3Response.Body as Readable);
+                    const fileIsWebP = path.extname(filename).toLowerCase() === '.webp';
 
-                // Resize and convert to WebP
-                const webpBuffer = await sharp(originalBuffer)
-                    .resize({
-                        width: 1600,
-                        height: 1600,
-                        fit: 'inside',
-                        withoutEnlargement: true,
-                    })
-                    .webp({ quality: 75 })
-                    .toBuffer();
-
-                // Get metadata from resized WebP image
-                const metadata = await sharp(webpBuffer).metadata();
-                const dimensions = {
-                    width: metadata.width || null,
-                    height: metadata.height || null,
-                    filesize: webpBuffer.length,
-                };
-
-                // Determine new filename
-                let baseName = filename.replace(/\.[^.]+$/, ''); // default fallback
-                if (doc.type === 'gallery' && doc.eventName) {
-                    baseName = slugify(doc.eventName, { lower: true, strict: true });
-                }
+                    // Slugify base name
+                    let baseName = filename.replace(/\.[^.]+$/, '');
+                    if (doc.type === 'gallery' && doc.eventName) {
+                        baseName = slugify(doc.eventName, { lower: true, strict: true });
+                    } else {
+                        baseName = slugify(baseName, { lower: true, strict: true });
+                    }
 
                 let newFilename = `${baseName}.webp`;
                 let counter = 1;
 
-                while (await keyExists(bucket, newFilename)) {
-                    newFilename = `${baseName}-${counter}.webp`;
-                    counter++;
-                }
+                    while (await keyExists(bucket, newFilename)) {
+                        newFilename = `${baseName}-${counter}.webp`;
+                        counter++;
+                    }
+
+                    let webpBuffer: Buffer;
+                    let dimensions: {
+                        width: number | null;
+                        height: number | null;
+                        filesize: number;
+                    };
+
+                    if (fileIsWebP) {
+                        // Reuse the original buffer
+                        webpBuffer = originalBuffer;
+
+                        const metadata = await sharp(webpBuffer).metadata();
+                        dimensions = {
+                            width: metadata.width || null,
+                            height: metadata.height || null,
+                            filesize: webpBuffer.length,
+                        };
+                    } else {
+                        // Resize and convert to WebP
+                        webpBuffer = await sharp(originalBuffer)
+                            .resize({
+                                width: 1000,
+                                height: 1000,
+                                fit: 'inside',
+                                withoutEnlargement: true,
+                            })
+                            .webp({ quality: 75 })
+                            .toBuffer();
+
+                        const metadata = await sharp(webpBuffer).metadata();
+                        dimensions = {
+                            width: metadata.width || null,
+                            height: metadata.height || null,
+                            filesize: webpBuffer.length,
+                        };
+                    }
 
                 // Upload new image to S3
                 await s3Client.send(
