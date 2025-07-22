@@ -21,11 +21,14 @@ let s3Client: S3Client | undefined;
 const storageType = process.env.MEDIA_STORAGE_LOCATION || 'local';
 
 const uploadDir = path.resolve(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+
+if (storageType === 'local') {
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
 }
 
-if (storageType == 's3') {
+if (storageType === 's3') {
     s3Client = new S3Client({
         region: process.env.S3_REGION,
         credentials: {
