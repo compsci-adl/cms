@@ -27,6 +27,30 @@ interface AdminUserInput {
   roles: Role[];
 }
 
+const buildConfigPlugins = [
+  authjsPlugin({
+    authjsConfig: authConfig,
+  }),
+];
+
+if (process.env.MEDIA_STORAGE_LOCATION && process.env.MEDIA_STORAGE_LOCATION === 's3') {
+  buildConfigPlugins.push(
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.S3_REGION,
+      },
+    })
+  );
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -54,30 +78,14 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [
-    authjsPlugin({
-      authjsConfig: authConfig,
-    }),
-    s3Storage({
-      collections: {
-        media: true,
-      },
-      bucket: process.env.S3_BUCKET || '',
-      config: {
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-        },
-        region: process.env.S3_REGION,
-      },
-    }),
-  ],
+  plugins: buildConfigPlugins,
   onInit: async (payload) => {
     const adminUsers = await payload.find({
       collection: 'users',
       where: { roles: { equals: 'admin' } },
     });
 
+    // TODO: Fix issue where admin user is already created by env var and upon changing the var, does not change the admin user
     if (adminUsers.docs.length === 0) {
       // Add new root user, prevents lock out
       const rootEmail = process.env.ROOT_EMAIL?.toString() || '';
