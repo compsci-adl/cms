@@ -1,12 +1,4 @@
 import { isAdmin } from '@/access/isAdmin';
-import path from 'path';
-import { type CollectionConfig } from 'payload';
-import sharp from 'sharp';
-import slugify from 'slugify';
-import { Readable } from 'stream';
-
-import fs from 'fs'
-
 // TODO: Only import if storage type matches
 import {
     S3Client,
@@ -15,6 +7,12 @@ import {
     HeadObjectCommand,
     DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
+import fs from 'fs';
+import path from 'path';
+import { type CollectionConfig } from 'payload';
+import sharp from 'sharp';
+import slugify from 'slugify';
+import { Readable } from 'stream';
 
 let s3Client: S3Client | undefined;
 
@@ -24,7 +22,7 @@ const uploadDir = path.resolve(process.cwd(), 'uploads');
 
 if (storageType === 'local') {
     if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+        fs.mkdirSync(uploadDir, { recursive: true });
     }
 }
 
@@ -37,7 +35,6 @@ if (storageType === 's3') {
         },
     });
 }
-
 
 function streamToBuffer(stream: Readable): Promise<Buffer> {
     return new Promise((resolve, reject) => {
@@ -128,7 +125,7 @@ export const Media: CollectionConfig = {
 };
 
 if (!Media.hooks) {
-    Media.hooks = {}
+    Media.hooks = {};
 }
 
 if (s3Client) {
@@ -137,9 +134,9 @@ if (s3Client) {
             // Only convert jpg, jpeg and png
             if (operation !== 'create') return; // Only process newly created uploads
 
-                const filename: string = doc.filename;
-                const fileExt = path.extname(filename).toLowerCase();
-                const validExts = ['.jpg', '.jpeg', '.png', '.webp'];
+            const filename: string = doc.filename;
+            const fileExt = path.extname(filename).toLowerCase();
+            const validExts = ['.jpg', '.jpeg', '.png', '.webp'];
 
             if (!validExts.includes(fileExt)) return;
 
@@ -156,61 +153,61 @@ if (s3Client) {
                     return;
                 }
 
-                    const originalBuffer = await streamToBuffer(s3Response.Body as Readable);
-                    const fileIsWebP = path.extname(filename).toLowerCase() === '.webp';
+                const originalBuffer = await streamToBuffer(s3Response.Body as Readable);
+                const fileIsWebP = path.extname(filename).toLowerCase() === '.webp';
 
-                    // Slugify base name
-                    let baseName = filename.replace(/\.[^.]+$/, '');
-                    if (doc.type === 'gallery' && doc.eventName) {
-                        baseName = slugify(doc.eventName, { lower: true, strict: true });
-                    } else {
-                        baseName = slugify(baseName, { lower: true, strict: true });
-                    }
+                // Slugify base name
+                let baseName = filename.replace(/\.[^.]+$/, '');
+                if (doc.type === 'gallery' && doc.eventName) {
+                    baseName = slugify(doc.eventName, { lower: true, strict: true });
+                } else {
+                    baseName = slugify(baseName, { lower: true, strict: true });
+                }
 
                 let newFilename = `${baseName}.webp`;
                 let counter = 1;
 
-                    while (await keyExists(bucket, newFilename)) {
-                        newFilename = `${baseName}-${counter}.webp`;
-                        counter++;
-                    }
+                while (await keyExists(bucket, newFilename)) {
+                    newFilename = `${baseName}-${counter}.webp`;
+                    counter++;
+                }
 
-                    let webpBuffer: Buffer;
-                    let dimensions: {
-                        width: number | null;
-                        height: number | null;
-                        filesize: number;
+                let webpBuffer: Buffer;
+                let dimensions: {
+                    width: number | null;
+                    height: number | null;
+                    filesize: number;
+                };
+
+                if (fileIsWebP) {
+                    // Reuse the original buffer
+                    webpBuffer = originalBuffer;
+
+                    const metadata = await sharp(webpBuffer).metadata();
+                    dimensions = {
+                        width: metadata.width || null,
+                        height: metadata.height || null,
+                        filesize: webpBuffer.length,
                     };
+                } else {
+                    // Resize and convert to WebP
+                    webpBuffer = await sharp(originalBuffer)
+                        .resize({
+                            width: 1000,
+                            height: 1000,
+                            fit: 'inside',
+                            withoutEnlargement: true,
+                        })
+                        .webp({ quality: 75 })
+                        .toBuffer();
 
-                    if (fileIsWebP) {
-                        // Reuse the original buffer
-                        webpBuffer = originalBuffer;
-
-                        const metadata = await sharp(webpBuffer).metadata();
-                        dimensions = {
-                            width: metadata.width || null,
-                            height: metadata.height || null,
-                            filesize: webpBuffer.length,
-                        };
-                    } else {
-                        // Resize and convert to WebP
-                        webpBuffer = await sharp(originalBuffer)
-                            .resize({
-                                width: 1000,
-                                height: 1000,
-                                fit: 'inside',
-                                withoutEnlargement: true,
-                            })
-                            .webp({ quality: 75 })
-                            .toBuffer();
-
-                        const metadata = await sharp(webpBuffer).metadata();
-                        dimensions = {
-                            width: metadata.width || null,
-                            height: metadata.height || null,
-                            filesize: webpBuffer.length,
-                        };
-                    }
+                    const metadata = await sharp(webpBuffer).metadata();
+                    dimensions = {
+                        width: metadata.width || null,
+                        height: metadata.height || null,
+                        filesize: webpBuffer.length,
+                    };
+                }
 
                 // Upload new image to S3
                 await s3Client.send(
@@ -241,8 +238,7 @@ if (s3Client) {
                 console.error('Error processing image:', error);
             }
         },
-
-    ]
+    ];
 } else {
     Media.hooks.afterChange = [
         async ({ doc, req, operation }) => {
@@ -257,17 +253,16 @@ if (s3Client) {
             const originalFilePath = path.join(uploadDir, filename);
 
             try {
-
                 // Read original file buffer
                 const originalBuffer = await fs.readFile(originalFilePath);
 
                 // Resize and convert to WebP
                 const webpBuffer = await sharp(originalBuffer)
-                    .resize({ 
-                        width: 1600, 
-                        height: 1600, 
-                        fit: 'inside', 
-                        withoutEnlargement: true 
+                    .resize({
+                        width: 1600,
+                        height: 1600,
+                        fit: 'inside',
+                        withoutEnlargement: true,
                     })
                     .webp({ quality: 75 })
                     .toBuffer();
@@ -287,7 +282,6 @@ if (s3Client) {
                 let newFilename = `${baseName}.webp`;
                 let counter = 1;
 
-                
                 // Avoid overwriting existing files
                 while (true) {
                     try {

@@ -1,9 +1,9 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
-import { NextRequest, NextResponse } from 'next/server';
-import { Readable } from 'stream';
-import path from 'path';
 import fs from 'fs/promises';
 import mime from 'mime';
+import { NextRequest, NextResponse } from 'next/server';
+import path from 'path';
+import { Readable } from 'stream';
 
 const storageType = process.env.MEDIA_STORAGE_LOCATION || 'local';
 
@@ -82,7 +82,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ filenam
         try {
             const uploadDir = path.resolve(process.cwd(), 'uploads');
             const filePath = path.join(uploadDir, filename);
-            console.log("FILENAME: ", filename)
+            console.log('FILENAME: ', filename);
             const fileBuffer = await fs.readFile(filePath);
 
             // application/octet-stream is default case for MIME types for non-text files if no match found
