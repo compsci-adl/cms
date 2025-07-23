@@ -20,6 +20,15 @@ ROOT_EMAIL=
 ROOT_PASS=
 ```
 This user has admin permissions to create more users and give further permissions.
+## Compressing Gallery Images
+1. Create a new folder named `images` in your project directory.
+2. Inside the `images` folder, create a subfolder for each gallery. Use descriptive names such as `meet-and-greet-S1-2025` or `industry-night-2025`.
+3. Place the photos you want to compress inside the appropriate gallery subfolder.
+4. Run the following command to compress all images:
+    ```bash
+    python compress-images.py
+    ```
+This will process and compress the images in each gallery folder. You can now upload these photos to the CMS.
 ## Contributing
 We welcome contributions to enhance the CS Club CMS! If you find any issues, have suggestions, or want to request a feature, please follow our [Contributing Guidelines](https://github.com/compsci-adl/.github/blob/main/CONTRIBUTING.md).
 ## License

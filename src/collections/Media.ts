@@ -125,8 +125,8 @@ export const Media: CollectionConfig = {
                         // Resize and convert to WebP
                         webpBuffer = await sharp(originalBuffer)
                             .resize({
-                                width: 1000,
-                                height: 1000,
+                                width: 1600,
+                                height: 1600,
                                 fit: 'inside',
                                 withoutEnlargement: true,
                             })
