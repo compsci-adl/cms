@@ -125,8 +125,8 @@ export const Media: CollectionConfig = {
                         // Resize and convert to WebP
                         webpBuffer = await sharp(originalBuffer)
                             .resize({
-                                width: 1000,
-                                height: 1000,
+                                width: 1600,
+                                height: 1600,
                                 fit: 'inside',
                                 withoutEnlargement: true,
                             })
@@ -210,7 +210,7 @@ export const Media: CollectionConfig = {
             admin: {
                 condition: (_, siblingData) => siblingData?.type === 'gallery',
                 description:
-                    'Used to name gallery images. Format should be "Event Name S1 2025" or "Event Name 2025".',
+                    'Used to name gallery images. Format should be "Event Name S1 2025" or "Event Name 2025".\n\n Please run the compress-images script before uploading gallery images.',
             },
         },
     ],
