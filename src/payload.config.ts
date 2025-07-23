@@ -1,8 +1,10 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { s3Storage } from '@payloadcms/storage-s3';
+import build from 'next/dist/build';
 import path from 'path';
 import { buildConfig } from 'payload';
+import type { Plugin } from 'payload';
 import { authjsPlugin } from 'payload-authjs';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
@@ -27,11 +29,19 @@ interface AdminUserInput {
   roles: Role[];
 }
 
-const buildConfigPlugins = [
-  authjsPlugin({
-    authjsConfig: authConfig,
-  }),
-];
+const buildConfigPlugins: Plugin[] = [];
+const isKeycloak = process.env.LOGIN_TYPE === 'keycloak';
+
+if (process.env.LOGIN_TYPE && process.env.LOGIN_TYPE == 'keycloak') {
+  buildConfigPlugins.push(
+    authjsPlugin({
+      authjsConfig: {
+        ...authConfig,
+        providers: isKeycloak ? authConfig.providers : [],
+      },
+    })
+  );
+}
 
 if (process.env.MEDIA_STORAGE_LOCATION && process.env.MEDIA_STORAGE_LOCATION === 's3') {
   buildConfigPlugins.push(
