@@ -1,10 +1,14 @@
 from PIL import Image, ImageOps
+import pillow_heif
 import os
+
+# Register HEIF/HEIC support
+pillow_heif.register_heif_opener()
 
 def convert_and_compress_images(input_dir, output_quality=75, max_size=1600):
     for root, _, files in os.walk(input_dir):
         for filename in files:
-            if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.heif', '.heic')):
                 file_path = os.path.join(root, filename)
                 with Image.open(file_path) as img:
                     # Apply EXIF orientation
