@@ -24,7 +24,12 @@ This user has admin permissions to create more users and give further permission
 1. Create a new folder named `images` in your project directory.
 2. Inside the `images` folder, create a subfolder for each gallery. Use descriptive names such as `meet-and-greet-S1-2025` or `industry-night-2025`.
 3. Place the photos you want to compress inside the appropriate gallery subfolder.
-4. Run the following command to compress all images:
+4. Install the Python requirements:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+5. Run the following command to compress all images:
     ```bash
     python compress-images.py
     ```
