@@ -105,9 +105,9 @@ export const Events: CollectionConfig = {
     ],
     // Access to event or admin
     access: {
-        create: isAdmin || isEvents,
-        update: isAdmin || isEvents,
-        delete: isAdmin || isEvents,
+        create: isEvents || isAdmin,
+        update: isEvents || isAdmin,
+        delete: isEvents || isAdmin,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -117,7 +117,7 @@ export const Events: CollectionConfig = {
                 },
             };
         },
-        readVersions: isAdmin || isEvents,
+        readVersions: isEvents || isAdmin,
     },
     versions: {
         drafts: true,

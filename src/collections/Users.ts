@@ -27,7 +27,7 @@ export const Users: CollectionConfig = {
             hasMany: true,
             options: [
                 {
-                    label: 'dmin',
+                    label: 'Admin',
                     value: 'admin',
                 },
                 {

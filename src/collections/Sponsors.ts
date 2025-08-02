@@ -70,9 +70,9 @@ export const Sponsors: CollectionConfig = {
         },
     ],
     access: {
-        create: isAdmin || isSponsorship,
-        update: isAdmin || isSponsorship,
-        delete: isAdmin || isSponsorship,
+        create: isSponsorship || isAdmin,
+        update: isSponsorship || isAdmin,
+        delete: isSponsorship || isAdmin,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -82,7 +82,7 @@ export const Sponsors: CollectionConfig = {
                 },
             };
         },
-        readVersions: isAdmin || isSponsorship,
+        readVersions: isSponsorship || isAdmin,
     },
     versions: {
         drafts: true,

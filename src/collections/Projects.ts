@@ -57,9 +57,9 @@ export const Projects: CollectionConfig = {
         },
     ],
     access: {
-        create: isAdmin || isOpenSource,
-        update: isAdmin || isOpenSource,
-        delete: isAdmin || isOpenSource,
+        create: isOpenSource || isAdmin,
+        update: isOpenSource || isAdmin,
+        delete: isOpenSource || isAdmin,
         read: () => {
             return true;
         },

@@ -1,11 +1,10 @@
+import { isAdmin } from '@/access/isAdmin';
+import { isEvents } from '@/access/isEvents';
 import { GlobalConfig } from 'payload';
 
 const Notification: GlobalConfig = {
     slug: 'notification',
     label: 'Website Notification',
-    access: {
-        read: () => true,
-    },
     fields: [
         {
             name: 'enabled',
@@ -76,6 +75,19 @@ const Notification: GlobalConfig = {
             },
         },
     ],
+    access: {
+        update: isAdmin || isEvents,
+        read: ({ req }) => {
+            if (req.user) return true;
+
+            return {
+                _status: {
+                    equals: 'published',
+                },
+            };
+        },
+        readVersions: isAdmin || isEvents,
+    },
 };
 
 export default Notification;
