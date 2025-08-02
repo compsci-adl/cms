@@ -1,4 +1,3 @@
-import { isAdmin } from '@/access/isAdmin';
 import { isGallery } from '@/access/isGallery';
 import type { CollectionConfig } from 'payload';
 import slugify from 'slugify';
@@ -81,9 +80,9 @@ export const Gallery: CollectionConfig = {
         ],
     },
     access: {
-        create: isGallery || isAdmin,
-        update: isGallery || isAdmin,
-        delete: isGallery || isAdmin,
+        create: isGallery,
+        update: isGallery,
+        delete: isGallery,
         read: () => true,
     },
     versions: {

@@ -1,4 +1,3 @@
-import { isAdmin } from '@/access/isAdmin';
 import { isEvents } from '@/access/isEvents';
 import type { CollectionConfig } from 'payload';
 
@@ -105,9 +104,9 @@ export const Events: CollectionConfig = {
     ],
     // Access to event or admin
     access: {
-        create: isEvents || isAdmin,
-        update: isEvents || isAdmin,
-        delete: isEvents || isAdmin,
+        create: isEvents,
+        update: isEvents,
+        delete: isEvents,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -117,7 +116,7 @@ export const Events: CollectionConfig = {
                 },
             };
         },
-        readVersions: isEvents || isAdmin,
+        readVersions: isEvents,
     },
     versions: {
         drafts: true,

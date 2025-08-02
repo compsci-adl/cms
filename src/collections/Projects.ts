@@ -1,4 +1,3 @@
-import { isAdmin } from '@/access/isAdmin';
 import { isOpenSource } from '@/access/isOpenSource';
 import type { CollectionConfig } from 'payload';
 
@@ -57,9 +56,9 @@ export const Projects: CollectionConfig = {
         },
     ],
     access: {
-        create: isOpenSource || isAdmin,
-        update: isOpenSource || isAdmin,
-        delete: isOpenSource || isAdmin,
+        create: isOpenSource,
+        update: isOpenSource,
+        delete: isOpenSource,
         read: () => {
             return true;
         },

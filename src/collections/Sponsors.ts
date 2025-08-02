@@ -1,4 +1,3 @@
-import { isAdmin } from '@/access/isAdmin';
 import { isSponsorship } from '@/access/isSponsorships';
 import type { CollectionConfig } from 'payload';
 
@@ -70,9 +69,9 @@ export const Sponsors: CollectionConfig = {
         },
     ],
     access: {
-        create: isSponsorship || isAdmin,
-        update: isSponsorship || isAdmin,
-        delete: isSponsorship || isAdmin,
+        create: isSponsorship,
+        update: isSponsorship,
+        delete: isSponsorship,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -82,7 +81,7 @@ export const Sponsors: CollectionConfig = {
                 },
             };
         },
-        readVersions: isSponsorship || isAdmin,
+        readVersions: isSponsorship,
     },
     versions: {
         drafts: true,
