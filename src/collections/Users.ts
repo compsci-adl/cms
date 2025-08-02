@@ -42,6 +42,10 @@ export const Users: CollectionConfig = {
                     label: 'Sponsorships',
                     value: 'sponsorships',
                 },
+                {
+                    label: 'Gallery',
+                    value: 'gallery',
+                },
             ],
             // Only admins can add or change roles
             access: {

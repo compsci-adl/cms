@@ -136,7 +136,7 @@ export interface User {
     name?: string | null;
     image?: string | null;
     /** Users can have one or many roles */
-    roles?: ('admin' | 'open-source' | 'events' | 'sponsorships')[] | null;
+    roles?: ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery')[] | null;
     accounts?:
         | {
               id?: string | null;
