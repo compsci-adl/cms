@@ -136,7 +136,7 @@ export interface User {
     name?: string | null;
     image?: string | null;
     /** Users can have one or many roles */
-    roles?: ('admin' | 'openSource' | 'events' | 'sponsorships')[] | null;
+    roles?: ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery')[] | null;
     accounts?:
         | {
               id?: string | null;
@@ -154,6 +154,12 @@ export interface Media {
     /** Please include alt name for file */
     alt?: string | null;
     type?: ('project' | 'sponsor' | 'event' | 'gallery') | null;
+    /**
+     * Used to name gallery images. Format should be "Event Name S1 2025" or "Event Name 2025".
+     *
+     * Please run the compress-images script before uploading gallery images.
+     */
+    eventName?: string | null;
     updatedAt: string;
     createdAt: string;
     url?: string | null;
@@ -255,8 +261,8 @@ export interface Gallery {
     id: string;
     eventName: string;
     eventDate: string;
-    /** Select or upload photos to the Media collection. Make sure they are tagged as type "gallery". */
-    images: (string | Media)[];
+    /** Automatically populated with media where filename matches the event name. */
+    images?: (string | Media)[] | null;
     updatedAt: string;
     createdAt: string;
     _status?: ('draft' | 'published') | null;
@@ -361,6 +367,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
     alt?: T;
     type?: T;
+    eventName?: T;
     updatedAt?: T;
     createdAt?: T;
     url?: T;

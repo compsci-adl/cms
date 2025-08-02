@@ -21,7 +21,7 @@ import Notification from './globals/Notification';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-type Role = 'admin' | 'events' | 'openSource' | 'sponsorships';
+type Role = 'admin' | 'events' | 'open-source' | 'sponsorships' | 'gallery';
 
 interface AdminUserInput {
   email: string;

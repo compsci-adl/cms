@@ -27,20 +27,24 @@ export const Users: CollectionConfig = {
             hasMany: true,
             options: [
                 {
-                    label: 'admin',
+                    label: 'Admin',
                     value: 'admin',
                 },
                 {
-                    label: 'open-source',
-                    value: 'openSource',
+                    label: 'Open Source',
+                    value: 'open-source',
                 },
                 {
-                    label: 'events',
+                    label: 'Events',
                     value: 'events',
                 },
                 {
                     label: 'Sponsorships',
                     value: 'sponsorships',
+                },
+                {
+                    label: 'Gallery',
+                    value: 'gallery',
                 },
             ],
             // Only admins can add or change roles
