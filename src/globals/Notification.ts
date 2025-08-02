@@ -76,7 +76,7 @@ const Notification: GlobalConfig = {
         },
     ],
     access: {
-        update: isAdmin || isEvents,
+        update: isEvents || isAdmin,
         read: ({ req }) => {
             if (req.user) return true;
 
@@ -86,7 +86,7 @@ const Notification: GlobalConfig = {
                 },
             };
         },
-        readVersions: isAdmin || isEvents,
+        readVersions: isEvents || isAdmin,
     },
 };
 
