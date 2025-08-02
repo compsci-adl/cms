@@ -27,15 +27,15 @@ export const Users: CollectionConfig = {
             hasMany: true,
             options: [
                 {
-                    label: 'admin',
+                    label: 'dmin',
                     value: 'admin',
                 },
                 {
-                    label: 'open-source',
-                    value: 'openSource',
+                    label: 'Open Source',
+                    value: 'open-source',
                 },
                 {
-                    label: 'events',
+                    label: 'Events',
                     value: 'events',
                 },
                 {
