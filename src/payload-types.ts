@@ -326,6 +326,8 @@ export interface CommitteeMember {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Please upload messages that are known to be spam so they can be automatically filtered out on Discord using DuckBot.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "known-spam-messages".
  */
