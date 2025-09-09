@@ -74,6 +74,7 @@ export interface Config {
         projects: Project;
         gallery: Gallery;
         'committee-members': CommitteeMember;
+        'known-spam-messages': KnownSpamMessage;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
@@ -88,6 +89,7 @@ export interface Config {
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
         gallery: GallerySelect<false> | GallerySelect<true>;
         'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
+        'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
             | PayloadLockedDocumentsSelect<true>;
@@ -134,7 +136,9 @@ export interface UserAuthOperations {
 export interface User {
     id: string;
     /** Users can have one or many roles */
-    roles?: ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery')[] | null;
+    roles?:
+        | ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery' | 'discord-mod')[]
+        | null;
     updatedAt: string;
     createdAt: string;
     email: string;
@@ -283,6 +287,20 @@ export interface CommitteeMember {
     _status?: ('draft' | 'published') | null;
 }
 /**
+ * Please upload messages that are known to be spam so they can be automatically filtered out on
+ * Discord using DuckBot.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "known-spam-messages".
+ */
+export interface KnownSpamMessage {
+    id: string;
+    message: string;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema via the `definition`
  * "payload-locked-documents".
  */
@@ -320,6 +338,10 @@ export interface PayloadLockedDocument {
         | ({
               relationTo: 'committee-members';
               value: string | CommitteeMember;
+          } | null)
+        | ({
+              relationTo: 'known-spam-messages';
+              value: string | KnownSpamMessage;
           } | null);
     globalSlug?: string | null;
     user: {
@@ -471,6 +493,16 @@ export interface CommitteeMembersSelect<T extends boolean = true> {
     name?: T;
     role?: T;
     exec?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "known-spam-messages_select".
+ */
+export interface KnownSpamMessagesSelect<T extends boolean = true> {
+    message?: T;
     updatedAt?: T;
     createdAt?: T;
     _status?: T;

@@ -1,7 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { s3Storage } from '@payloadcms/storage-s3';
-import build from 'next/dist/build';
 import path from 'path';
 import { buildConfig } from 'payload';
 import type { Plugin } from 'payload';
@@ -12,6 +11,7 @@ import { authConfig } from './auth.config';
 import { CommitteeMembers } from './collections/CommitteeMembers';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
+import { KnownSpamMessages } from './collections/KnownSpamMessages';
 import { Media } from './collections/Media';
 import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
@@ -22,7 +22,7 @@ import Notification from './globals/Notification';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-type Role = 'admin' | 'events' | 'open-source' | 'sponsorships' | 'gallery';
+type Role = 'admin' | 'events' | 'open-source' | 'sponsorships' | 'gallery' | 'discord-mod';
 
 interface AdminUserInput {
   email: string;
@@ -79,7 +79,17 @@ export default buildConfig({
       ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
       : '',
   ].filter(Boolean),
-  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects, Gallery, CommitteeMembers], // Include any new collections here
+  collections: [
+    Users,
+    Media,
+    Events,
+    Sponsors,
+    Tech_Stack,
+    Projects,
+    Gallery,
+    CommitteeMembers,
+    KnownSpamMessages,
+  ], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
