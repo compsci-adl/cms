@@ -5,7 +5,8 @@ export const KnownSpamMessages: CollectionConfig = {
     slug: 'known-spam-messages',
     admin: {
         useAsTitle: 'message',
-        description: 'Please upload messages that are known to be spam so they can be automatically filtered out on Discord using DuckBot.',
+        description:
+            'Please upload messages that are known to be spam so they can be automatically filtered out on Discord using DuckBot.',
     },
     fields: [
         {
