@@ -9,6 +9,7 @@ import { authjsPlugin } from 'payload-authjs';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
+import { CommitteeMembers } from './collections/CommitteeMembers';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
 import { Media } from './collections/Media';
@@ -78,7 +79,7 @@ export default buildConfig({
       ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
       : '',
   ].filter(Boolean),
-  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects, Gallery], // Include any new collections here
+  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects, Gallery, CommitteeMembers], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

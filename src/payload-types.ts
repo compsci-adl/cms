@@ -73,6 +73,7 @@ export interface Config {
         'tech-stack': TechStack;
         projects: Project;
         gallery: Gallery;
+        'committee-members': CommitteeMember;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
@@ -86,6 +87,7 @@ export interface Config {
         'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
         gallery: GallerySelect<false> | GallerySelect<true>;
+        'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
             | PayloadLockedDocumentsSelect<true>;
@@ -131,22 +133,25 @@ export interface UserAuthOperations {
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users". */
 export interface User {
     id: string;
-    email: string;
-    emailVerified?: string | null;
-    name?: string | null;
-    image?: string | null;
     /** Users can have one or many roles */
     roles?: ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery')[] | null;
-    accounts?:
-        | {
-              id?: string | null;
-              provider: string;
-              providerAccountId: string;
-              type: string;
-          }[]
-        | null;
     updatedAt: string;
     createdAt: string;
+    email: string;
+    resetPasswordToken?: string | null;
+    resetPasswordExpiration?: string | null;
+    salt?: string | null;
+    hash?: string | null;
+    loginAttempts?: number | null;
+    lockUntil?: string | null;
+    sessions?:
+        | {
+              id: string;
+              createdAt?: string | null;
+              expiresAt: string;
+          }[]
+        | null;
+    password?: string | null;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media". */
 export interface Media {
@@ -267,6 +272,16 @@ export interface Gallery {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "committee-members". */
+export interface CommitteeMember {
+    id: string;
+    name: string;
+    role: string;
+    exec?: boolean | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema via the `definition`
  * "payload-locked-documents".
@@ -301,6 +316,10 @@ export interface PayloadLockedDocument {
         | ({
               relationTo: 'gallery';
               value: string | Gallery;
+          } | null)
+        | ({
+              relationTo: 'committee-members';
+              value: string | CommitteeMember;
           } | null);
     globalSlug?: string | null;
     user: {
@@ -346,22 +365,23 @@ export interface PayloadMigration {
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users_select". */
 export interface UsersSelect<T extends boolean = true> {
-    id?: T;
-    email?: T;
-    emailVerified?: T;
-    name?: T;
-    image?: T;
     roles?: T;
-    accounts?:
+    updatedAt?: T;
+    createdAt?: T;
+    email?: T;
+    resetPasswordToken?: T;
+    resetPasswordExpiration?: T;
+    salt?: T;
+    hash?: T;
+    loginAttempts?: T;
+    lockUntil?: T;
+    sessions?:
         | T
         | {
               id?: T;
-              provider?: T;
-              providerAccountId?: T;
-              type?: T;
+              createdAt?: T;
+              expiresAt?: T;
           };
-    updatedAt?: T;
-    createdAt?: T;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media_select". */
 export interface MediaSelect<T extends boolean = true> {
@@ -439,6 +459,18 @@ export interface GallerySelect<T extends boolean = true> {
     eventName?: T;
     eventDate?: T;
     images?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "committee-members_select".
+ */
+export interface CommitteeMembersSelect<T extends boolean = true> {
+    name?: T;
+    role?: T;
+    exec?: T;
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
