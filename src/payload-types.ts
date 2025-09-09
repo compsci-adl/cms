@@ -136,7 +136,9 @@ export interface UserAuthOperations {
 export interface User {
     id: string;
     /** Users can have one or many roles */
-    roles?: ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery')[] | null;
+    roles?:
+        | ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery' | 'discord-mod')[]
+        | null;
     updatedAt: string;
     createdAt: string;
     email: string;

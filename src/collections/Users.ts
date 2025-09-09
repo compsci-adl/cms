@@ -46,6 +46,10 @@ export const Users: CollectionConfig = {
                     label: 'Gallery',
                     value: 'gallery',
                 },
+                {
+                    label: 'Discord Moderator',
+                    value: 'discord-mod',
+                },
             ],
             // Only admins can add or change roles
             access: {
