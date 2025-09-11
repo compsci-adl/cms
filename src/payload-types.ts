@@ -135,6 +135,10 @@ export interface UserAuthOperations {
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users". */
 export interface User {
     id: string;
+    email: string;
+    emailVerified?: string | null;
+    name?: string | null;
+    image?: string | null;
     /** Users can have one or many roles */
     roles?:
         | (
@@ -147,23 +151,16 @@ export interface User {
               | 'committee-manager'
           )[]
         | null;
-    updatedAt: string;
-    createdAt: string;
-    email: string;
-    resetPasswordToken?: string | null;
-    resetPasswordExpiration?: string | null;
-    salt?: string | null;
-    hash?: string | null;
-    loginAttempts?: number | null;
-    lockUntil?: string | null;
-    sessions?:
+    accounts?:
         | {
-              id: string;
-              createdAt?: string | null;
-              expiresAt: string;
+              id?: string | null;
+              provider: string;
+              providerAccountId: string;
+              type: string;
           }[]
         | null;
-    password?: string | null;
+    updatedAt: string;
+    createdAt: string;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media". */
 export interface Media {
@@ -395,23 +392,22 @@ export interface PayloadMigration {
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users_select". */
 export interface UsersSelect<T extends boolean = true> {
-    roles?: T;
-    updatedAt?: T;
-    createdAt?: T;
+    id?: T;
     email?: T;
-    resetPasswordToken?: T;
-    resetPasswordExpiration?: T;
-    salt?: T;
-    hash?: T;
-    loginAttempts?: T;
-    lockUntil?: T;
-    sessions?:
+    emailVerified?: T;
+    name?: T;
+    image?: T;
+    roles?: T;
+    accounts?:
         | T
         | {
               id?: T;
-              createdAt?: T;
-              expiresAt?: T;
+              provider?: T;
+              providerAccountId?: T;
+              type?: T;
           };
+    updatedAt?: T;
+    createdAt?: T;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media_select". */
 export interface MediaSelect<T extends boolean = true> {
