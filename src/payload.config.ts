@@ -22,7 +22,14 @@ import Notification from './globals/Notification';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-type Role = 'admin' | 'events' | 'open-source' | 'sponsorships' | 'gallery' | 'discord-mod';
+type Role =
+  | 'admin'
+  | 'events'
+  | 'open-source'
+  | 'sponsorships'
+  | 'gallery'
+  | 'discord-mod'
+  | 'committee-manager';
 
 interface AdminUserInput {
   email: string;

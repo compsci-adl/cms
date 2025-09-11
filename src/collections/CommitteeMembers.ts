@@ -1,4 +1,4 @@
-import { isAdmin } from '@/access/isAdmin';
+import { isCommitteeManager } from '@/access/isCommitteeManager';
 import type { CollectionConfig } from 'payload';
 
 export const CommitteeMembers: CollectionConfig = {
@@ -25,9 +25,9 @@ export const CommitteeMembers: CollectionConfig = {
         },
     ],
     access: {
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
+        create: isCommitteeManager,
+        update: isCommitteeManager,
+        delete: isCommitteeManager,
         read: () => true,
     },
     versions: {

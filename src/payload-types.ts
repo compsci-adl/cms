@@ -137,7 +137,15 @@ export interface User {
     id: string;
     /** Users can have one or many roles */
     roles?:
-        | ('admin' | 'open-source' | 'events' | 'sponsorships' | 'gallery' | 'discord-mod')[]
+        | (
+              | 'admin'
+              | 'open-source'
+              | 'events'
+              | 'sponsorships'
+              | 'gallery'
+              | 'discord-mod'
+              | 'committee-manager'
+          )[]
         | null;
     updatedAt: string;
     createdAt: string;
