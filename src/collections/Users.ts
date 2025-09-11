@@ -50,6 +50,10 @@ export const Users: CollectionConfig = {
                     label: 'Discord Moderator',
                     value: 'discord-mod',
                 },
+                {
+                    label: 'Committee Manager',
+                    value: 'committee-manager',
+                },
             ],
             // Only admins can add or change roles
             access: {
