@@ -77,15 +77,7 @@ const Notification: GlobalConfig = {
     ],
     access: {
         update: isEvents || isAdmin,
-        read: ({ req }) => {
-            if (req.user) return true;
-
-            return {
-                _status: {
-                    equals: 'published',
-                },
-            };
-        },
+        read: () => true,
         readVersions: isEvents || isAdmin,
     },
 };
