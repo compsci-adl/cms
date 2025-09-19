@@ -149,6 +149,7 @@ export interface User {
               | 'gallery'
               | 'discord-mod'
               | 'committee-manager'
+              | 'exec'
           )[]
         | null;
     accounts?:

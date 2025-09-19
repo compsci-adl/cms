@@ -54,6 +54,10 @@ export const Users: CollectionConfig = {
                     label: 'Committee Manager',
                     value: 'committee-manager',
                 },
+                {
+                    label: 'Exec',
+                    value: 'exec',
+                },
             ],
             // Only admins can add or change roles
             access: {
