@@ -27,20 +27,32 @@ export const Users: CollectionConfig = {
             hasMany: true,
             options: [
                 {
-                    label: 'admin',
+                    label: 'Admin',
                     value: 'admin',
                 },
                 {
-                    label: 'open-source',
-                    value: 'openSource',
+                    label: 'Open Source',
+                    value: 'open-source',
                 },
                 {
-                    label: 'events',
+                    label: 'Events',
                     value: 'events',
                 },
                 {
                     label: 'Sponsorships',
                     value: 'sponsorships',
+                },
+                {
+                    label: 'Gallery',
+                    value: 'gallery',
+                },
+                {
+                    label: 'Discord Moderator',
+                    value: 'discord-mod',
+                },
+                {
+                    label: 'Committee Manager',
+                    value: 'committee-manager',
                 },
             ],
             // Only admins can add or change roles

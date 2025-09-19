@@ -3,12 +3,15 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { s3Storage } from '@payloadcms/storage-s3';
 import path from 'path';
 import { buildConfig } from 'payload';
+import type { Plugin } from 'payload';
 import { authjsPlugin } from 'payload-authjs';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
+import { CommitteeMembers } from './collections/CommitteeMembers';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
+import { KnownSpamMessages } from './collections/KnownSpamMessages';
 import { Media } from './collections/Media';
 import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
@@ -19,7 +22,14 @@ import Notification from './globals/Notification';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-type Role = 'admin' | 'events' | 'openSource' | 'sponsorships';
+type Role =
+  | 'admin'
+  | 'events'
+  | 'open-source'
+  | 'sponsorships'
+  | 'gallery'
+  | 'discord-mod'
+  | 'committee-manager';
 
 interface AdminUserInput {
   email: string;
@@ -27,11 +37,19 @@ interface AdminUserInput {
   roles: Role[];
 }
 
-const buildConfigPlugins = [
-  authjsPlugin({
-    authjsConfig: authConfig,
-  }),
-];
+const buildConfigPlugins: Plugin[] = [];
+const isKeycloak = process.env.LOGIN_TYPE === 'keycloak';
+
+if (process.env.LOGIN_TYPE && process.env.LOGIN_TYPE == 'keycloak') {
+  buildConfigPlugins.push(
+    authjsPlugin({
+      authjsConfig: {
+        ...authConfig,
+        providers: isKeycloak ? authConfig.providers : [],
+      },
+    })
+  );
+}
 
 if (process.env.MEDIA_STORAGE_LOCATION && process.env.MEDIA_STORAGE_LOCATION === 's3') {
   buildConfigPlugins.push(
@@ -68,7 +86,17 @@ export default buildConfig({
       ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
       : '',
   ].filter(Boolean),
-  collections: [Users, Media, Events, Sponsors, Tech_Stack, Projects, Gallery], // Include any new collections here
+  collections: [
+    Users,
+    Media,
+    Events,
+    Sponsors,
+    Tech_Stack,
+    Projects,
+    Gallery,
+    CommitteeMembers,
+    KnownSpamMessages,
+  ], // Include any new collections here
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -73,6 +73,8 @@ export interface Config {
         'tech-stack': TechStack;
         projects: Project;
         gallery: Gallery;
+        'committee-members': CommitteeMember;
+        'known-spam-messages': KnownSpamMessage;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
@@ -86,6 +88,8 @@ export interface Config {
         'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
         gallery: GallerySelect<false> | GallerySelect<true>;
+        'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
+        'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
             | PayloadLockedDocumentsSelect<true>;
@@ -136,7 +140,17 @@ export interface User {
     name?: string | null;
     image?: string | null;
     /** Users can have one or many roles */
-    roles?: ('admin' | 'openSource' | 'events' | 'sponsorships')[] | null;
+    roles?:
+        | (
+              | 'admin'
+              | 'open-source'
+              | 'events'
+              | 'sponsorships'
+              | 'gallery'
+              | 'discord-mod'
+              | 'committee-manager'
+          )[]
+        | null;
     accounts?:
         | {
               id?: string | null;
@@ -154,6 +168,12 @@ export interface Media {
     /** Please include alt name for file */
     alt?: string | null;
     type?: ('project' | 'sponsor' | 'event' | 'gallery') | null;
+    /**
+     * Used to name gallery images. Format should be "Event Name S1 2025" or "Event Name 2025".
+     *
+     * Please run the compress-images script before uploading gallery images.
+     */
+    eventName?: string | null;
     updatedAt: string;
     createdAt: string;
     url?: string | null;
@@ -255,8 +275,32 @@ export interface Gallery {
     id: string;
     eventName: string;
     eventDate: string;
-    /** Select or upload photos to the Media collection. Make sure they are tagged as type "gallery". */
-    images: (string | Media)[];
+    /** Automatically populated with media where filename matches the event name. */
+    images?: (string | Media)[] | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "committee-members". */
+export interface CommitteeMember {
+    id: string;
+    name: string;
+    role: string;
+    exec?: boolean | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
+/**
+ * Please upload messages that are known to be spam so they can be automatically filtered out on
+ * Discord using DuckBot.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "known-spam-messages".
+ */
+export interface KnownSpamMessage {
+    id: string;
+    message: string;
     updatedAt: string;
     createdAt: string;
     _status?: ('draft' | 'published') | null;
@@ -295,6 +339,14 @@ export interface PayloadLockedDocument {
         | ({
               relationTo: 'gallery';
               value: string | Gallery;
+          } | null)
+        | ({
+              relationTo: 'committee-members';
+              value: string | CommitteeMember;
+          } | null)
+        | ({
+              relationTo: 'known-spam-messages';
+              value: string | KnownSpamMessage;
           } | null);
     globalSlug?: string | null;
     user: {
@@ -361,6 +413,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
     alt?: T;
     type?: T;
+    eventName?: T;
     updatedAt?: T;
     createdAt?: T;
     url?: T;
@@ -432,6 +485,28 @@ export interface GallerySelect<T extends boolean = true> {
     eventName?: T;
     eventDate?: T;
     images?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "committee-members_select".
+ */
+export interface CommitteeMembersSelect<T extends boolean = true> {
+    name?: T;
+    role?: T;
+    exec?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "known-spam-messages_select".
+ */
+export interface KnownSpamMessagesSelect<T extends boolean = true> {
+    message?: T;
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
