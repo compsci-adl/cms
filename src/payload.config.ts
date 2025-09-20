@@ -18,6 +18,7 @@ import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Users } from './collections/Users';
 import Notification from './globals/Notification';
+import { HonoraryMembers } from './collections/HonoraryMembers';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -96,6 +97,7 @@ export default buildConfig({
     Projects,
     Gallery,
     CommitteeMembers,
+    HonoraryMembers,
     KnownSpamMessages,
   ], // Include any new collections here
   editor: lexicalEditor(),
