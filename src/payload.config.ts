@@ -29,7 +29,8 @@ type Role =
   | 'sponsorships'
   | 'gallery'
   | 'discord-mod'
-  | 'committee-manager';
+  | 'committee-manager'
+  | 'exec';
 
 interface AdminUserInput {
   email: string;
