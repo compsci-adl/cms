@@ -74,6 +74,7 @@ export interface Config {
         projects: Project;
         gallery: Gallery;
         'committee-members': CommitteeMember;
+        'honorary-members': HonoraryMember;
         'known-spam-messages': KnownSpamMessage;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
@@ -89,6 +90,7 @@ export interface Config {
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
         gallery: GallerySelect<false> | GallerySelect<true>;
         'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
+        'honorary-members': HonoraryMembersSelect<false> | HonoraryMembersSelect<true>;
         'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
@@ -135,10 +137,6 @@ export interface UserAuthOperations {
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users". */
 export interface User {
     id: string;
-    email: string;
-    emailVerified?: string | null;
-    name?: string | null;
-    image?: string | null;
     /** Users can have one or many roles */
     roles?:
         | (
@@ -152,16 +150,23 @@ export interface User {
               | 'exec'
           )[]
         | null;
-    accounts?:
-        | {
-              id?: string | null;
-              provider: string;
-              providerAccountId: string;
-              type: string;
-          }[]
-        | null;
     updatedAt: string;
     createdAt: string;
+    email: string;
+    resetPasswordToken?: string | null;
+    resetPasswordExpiration?: string | null;
+    salt?: string | null;
+    hash?: string | null;
+    loginAttempts?: number | null;
+    lockUntil?: string | null;
+    sessions?:
+        | {
+              id: string;
+              createdAt?: string | null;
+              expiresAt: string;
+          }[]
+        | null;
+    password?: string | null;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media". */
 export interface Media {
@@ -292,6 +297,22 @@ export interface CommitteeMember {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "honorary-members". */
+export interface HonoraryMember {
+    id: string;
+    name: string;
+    yearAwarded: number;
+    positions?:
+        | {
+              position: string;
+              year: number;
+              id?: string | null;
+          }[]
+        | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
 /**
  * Please upload messages that are known to be spam so they can be automatically filtered out on
  * Discord using DuckBot.
@@ -346,6 +367,10 @@ export interface PayloadLockedDocument {
               value: string | CommitteeMember;
           } | null)
         | ({
+              relationTo: 'honorary-members';
+              value: string | HonoraryMember;
+          } | null)
+        | ({
               relationTo: 'known-spam-messages';
               value: string | KnownSpamMessage;
           } | null);
@@ -393,22 +418,23 @@ export interface PayloadMigration {
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "users_select". */
 export interface UsersSelect<T extends boolean = true> {
-    id?: T;
-    email?: T;
-    emailVerified?: T;
-    name?: T;
-    image?: T;
     roles?: T;
-    accounts?:
+    updatedAt?: T;
+    createdAt?: T;
+    email?: T;
+    resetPasswordToken?: T;
+    resetPasswordExpiration?: T;
+    salt?: T;
+    hash?: T;
+    loginAttempts?: T;
+    lockUntil?: T;
+    sessions?:
         | T
         | {
               id?: T;
-              provider?: T;
-              providerAccountId?: T;
-              type?: T;
+              createdAt?: T;
+              expiresAt?: T;
           };
-    updatedAt?: T;
-    createdAt?: T;
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media_select". */
 export interface MediaSelect<T extends boolean = true> {
@@ -498,6 +524,24 @@ export interface CommitteeMembersSelect<T extends boolean = true> {
     name?: T;
     role?: T;
     exec?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "honorary-members_select".
+ */
+export interface HonoraryMembersSelect<T extends boolean = true> {
+    name?: T;
+    yearAwarded?: T;
+    positions?:
+        | T
+        | {
+              position?: T;
+              year?: T;
+              id?: T;
+          };
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
