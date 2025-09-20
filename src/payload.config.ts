@@ -11,6 +11,7 @@ import { authConfig } from './auth.config';
 import { CommitteeMembers } from './collections/CommitteeMembers';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
+import { HonoraryMembers } from './collections/HonoraryMembers';
 import { KnownSpamMessages } from './collections/KnownSpamMessages';
 import { Media } from './collections/Media';
 import { Projects } from './collections/Projects';
@@ -18,7 +19,6 @@ import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Users } from './collections/Users';
 import Notification from './globals/Notification';
-import { HonoraryMembers } from './collections/HonoraryMembers';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
