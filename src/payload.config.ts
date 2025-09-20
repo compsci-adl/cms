@@ -18,6 +18,7 @@ import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Users } from './collections/Users';
 import Notification from './globals/Notification';
+import { CommonEvents } from './collections/CommonEvents';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -91,6 +92,7 @@ export default buildConfig({
     Users,
     Media,
     Events,
+    CommonEvents,
     Sponsors,
     Tech_Stack,
     Projects,
