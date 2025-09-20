@@ -1,35 +1,35 @@
-import { isEvents } from "@/access/isEvents";
-import type { CollectionConfig } from "payload";
+import { isEvents } from '@/access/isEvents';
+import type { CollectionConfig } from 'payload';
 
 export const CommonEvents: CollectionConfig = {
-    slug: "common-events",
+    slug: 'common-events',
     admin: {
-        useAsTitle: "name",
+        useAsTitle: 'name',
     },
     fields: [
         {
-            name: "name",
-            type: "text",
+            name: 'name',
+            type: 'text',
             required: true,
         },
         {
-            name: "description",
-            type: "textarea",
+            name: 'description',
+            type: 'textarea',
             required: false,
         },
         {
-            name: "upcomingDates",
-            type: "array",
+            name: 'upcomingDates',
+            type: 'array',
             required: false,
             fields: [
                 {
-                    name: "date",
-                    type: "date",
+                    name: 'date',
+                    type: 'date',
                     required: true,
                 },
                 {
-                    name: "notes",
-                    type: "text",
+                    name: 'notes',
+                    type: 'text',
                     required: false,
                 },
             ],
@@ -47,5 +47,3 @@ export const CommonEvents: CollectionConfig = {
         drafts: true,
     },
 };
-
-

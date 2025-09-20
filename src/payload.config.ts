@@ -9,6 +9,7 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
 import { CommitteeMembers } from './collections/CommitteeMembers';
+import { CommonEvents } from './collections/CommonEvents';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
 import { KnownSpamMessages } from './collections/KnownSpamMessages';
@@ -18,7 +19,6 @@ import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Users } from './collections/Users';
 import Notification from './globals/Notification';
-import { CommonEvents } from './collections/CommonEvents';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
