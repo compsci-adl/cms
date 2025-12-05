@@ -19,13 +19,24 @@ if (storageType === 's3') {
     });
 }
 
-// Convert ReadableStream to Uint8Array
-async function streamToBuffer(stream: Readable): Promise<Uint8Array> {
+// Convert ReadableStream to Buffer
+async function streamToBuffer(stream: Readable): Promise<Buffer> {
     const chunks = [];
     for await (const chunk of stream) {
         chunks.push(chunk);
     }
     return Buffer.concat(chunks);
+}
+
+// Produce a standalone ArrayBuffer for JS Fetch APIs
+function bufferToArrayBuffer(buf: Buffer | Uint8Array): ArrayBuffer {
+    // If it's already a Buffer, slice directly
+    if (buf instanceof Buffer) {
+        return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
+    }
+
+    // For Uint8Array (including Buffer in some typings), do the same
+    return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
 }
 
 export async function GET(req: NextRequest, context: { params: Promise<{ filename: string }> }) {
@@ -61,18 +72,24 @@ export async function GET(req: NextRequest, context: { params: Promise<{ filenam
                 headers.set('ETag', data.ETag);
             }
 
-            return new NextResponse(bodyBuffer, {
+            // Convert to a standalone ArrayBuffer
+            return new NextResponse(bufferToArrayBuffer(bodyBuffer), {
                 status: 200,
                 headers,
             });
-        } catch (err: any) {
-            if (err.name === 'NoSuchKey') {
+        } catch (err: unknown) {
+            let errName: string | undefined;
+            if (typeof err === 'object' && err !== null && 'name' in err) {
+                errName = (err as { name?: string }).name;
+            }
+
+            if (errName === 'NoSuchKey') {
                 return new NextResponse('File not found', { status: 404 });
             }
 
             console.error('Failed to fetch S3 object:', err);
 
-            if (err.name === 'AccessDenied') {
+            if (errName === 'AccessDenied') {
                 return new NextResponse('Access Denied', { status: 403 });
             }
 
@@ -92,7 +109,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ filenam
             headers.set('Content-Type', contentType);
             headers.set('Content-Length', fileBuffer.length.toString());
 
-            return new NextResponse(fileBuffer, {
+            return new NextResponse(bufferToArrayBuffer(fileBuffer), {
                 status: 200,
                 headers,
             });
