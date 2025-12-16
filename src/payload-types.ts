@@ -315,16 +315,14 @@ export interface Project {
  * via the `definition` "gallery".
  */
 export interface Gallery {
-  id: string;
-  eventName: string;
-  eventDate: string;
-  /**
-   * Automatically populated with media where filename matches the event name.
-   */
-  images?: (string | Media)[] | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+    id: string;
+    eventName: string;
+    eventDate: string;
+    /** Automatically populated with media where eventName metadata matches the event name. */
+    images?: (string | Media)[] | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
