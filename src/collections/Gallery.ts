@@ -1,6 +1,5 @@
 import { isGallery } from '@/access/isGallery';
 import type { CollectionConfig } from 'payload';
-import slugify from 'slugify';
 
 export const Gallery: CollectionConfig = {
     slug: 'gallery',
@@ -38,7 +37,7 @@ export const Gallery: CollectionConfig = {
             admin: {
                 readOnly: true,
                 description:
-                    'Automatically populated with media where filename matches the event name.',
+                    'Automatically populated with media where eventName metadata matches the event name.',
             },
         },
     ],
@@ -48,17 +47,14 @@ export const Gallery: CollectionConfig = {
                 const eventName = data.eventName;
                 if (!eventName) return data;
 
-                const slug = slugify(eventName, { lower: true, strict: true });
-
-                console.log(`Slugified event name: ${slug}`);
-                // Find matching media
+                // Find matching media by eventName metadata
                 const mediaResults = await req.payload.find({
                     collection: 'media',
                     where: {
                         and: [
                             {
-                                filename: {
-                                    like: `${slug}`,
+                                eventName: {
+                                    equals: eventName,
                                 },
                             },
                             {
