@@ -69,6 +69,7 @@ export interface Config {
         users: User;
         media: Media;
         events: Event;
+        'common-events': CommonEvent;
         sponsors: Sponsor;
         'tech-stack': TechStack;
         projects: Project;
@@ -85,6 +86,7 @@ export interface Config {
         users: UsersSelect<false> | UsersSelect<true>;
         media: MediaSelect<false> | MediaSelect<true>;
         events: EventsSelect<false> | EventsSelect<true>;
+        'common-events': CommonEventsSelect<false> | CommonEventsSelect<true>;
         sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
         'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
@@ -218,6 +220,22 @@ export interface Event {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "common-events". */
+export interface CommonEvent {
+    id: string;
+    name: string;
+    description?: string | null;
+    upcomingDates?:
+        | {
+              date: string;
+              notes?: string | null;
+              id?: string | null;
+          }[]
+        | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
 /**
  * Please upload a banner image to media before filling in sponsor.
  *
@@ -344,6 +362,10 @@ export interface PayloadLockedDocument {
               value: string | Event;
           } | null)
         | ({
+              relationTo: 'common-events';
+              value: string | CommonEvent;
+          } | null)
+        | ({
               relationTo: 'sponsors';
               value: string | Sponsor;
           } | null)
@@ -467,6 +489,24 @@ export interface EventsSelect<T extends boolean = true> {
         | {
               displayText?: T;
               Link?: T;
+          };
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "common-events_select".
+ */
+export interface CommonEventsSelect<T extends boolean = true> {
+    name?: T;
+    description?: T;
+    upcomingDates?:
+        | T
+        | {
+              date?: T;
+              notes?: T;
+              id?: T;
           };
     updatedAt?: T;
     createdAt?: T;

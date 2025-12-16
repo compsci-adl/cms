@@ -9,6 +9,7 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
 import { CommitteeMembers } from './collections/CommitteeMembers';
+import { CommonEvents } from './collections/CommonEvents';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
 import { HonoraryMembers } from './collections/HonoraryMembers';
@@ -92,6 +93,7 @@ export default buildConfig({
     Users,
     Media,
     Events,
+    CommonEvents,
     Sponsors,
     Tech_Stack,
     Projects,
