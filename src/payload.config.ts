@@ -9,8 +9,10 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { authConfig } from './auth.config';
 import { CommitteeMembers } from './collections/CommitteeMembers';
+import { CommonEvents } from './collections/CommonEvents';
 import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
+import { HonoraryMembers } from './collections/HonoraryMembers';
 import { KnownSpamMessages } from './collections/KnownSpamMessages';
 import { Links } from './collections/Links';
 import { Media } from './collections/Media';
@@ -98,6 +100,7 @@ export default buildConfig({
     Projects,
     Gallery,
     CommitteeMembers,
+    HonoraryMembers,
     KnownSpamMessages,
   ], // Include any new collections here
   editor: lexicalEditor(),
