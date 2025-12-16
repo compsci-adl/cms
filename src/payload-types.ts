@@ -74,6 +74,7 @@ export interface Config {
         projects: Project;
         gallery: Gallery;
         'committee-members': CommitteeMember;
+        'honorary-members': HonoraryMember;
         'known-spam-messages': KnownSpamMessage;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
@@ -89,6 +90,7 @@ export interface Config {
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
         gallery: GallerySelect<false> | GallerySelect<true>;
         'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
+        'honorary-members': HonoraryMembersSelect<false> | HonoraryMembersSelect<true>;
         'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
@@ -292,6 +294,22 @@ export interface CommitteeMember {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "honorary-members". */
+export interface HonoraryMember {
+    id: string;
+    name: string;
+    yearAwarded: number;
+    positions?:
+        | {
+              position: string;
+              year: number;
+              id?: string | null;
+          }[]
+        | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
 /**
  * Please upload messages that are known to be spam so they can be automatically filtered out on
  * Discord using DuckBot.
@@ -344,6 +362,10 @@ export interface PayloadLockedDocument {
         | ({
               relationTo: 'committee-members';
               value: string | CommitteeMember;
+          } | null)
+        | ({
+              relationTo: 'honorary-members';
+              value: string | HonoraryMember;
           } | null)
         | ({
               relationTo: 'known-spam-messages';
@@ -498,6 +520,24 @@ export interface CommitteeMembersSelect<T extends boolean = true> {
     name?: T;
     role?: T;
     exec?: T;
+    updatedAt?: T;
+    createdAt?: T;
+    _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema via the `definition`
+ * "honorary-members_select".
+ */
+export interface HonoraryMembersSelect<T extends boolean = true> {
+    name?: T;
+    yearAwarded?: T;
+    positions?:
+        | T
+        | {
+              position?: T;
+              year?: T;
+              id?: T;
+          };
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
