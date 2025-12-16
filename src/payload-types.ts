@@ -69,7 +69,7 @@ export interface Config {
         users: User;
         media: Media;
         events: Event;
-        'common-events': CommonEvent;
+        links: Link;
         sponsors: Sponsor;
         'tech-stack': TechStack;
         projects: Project;
@@ -86,7 +86,7 @@ export interface Config {
         users: UsersSelect<false> | UsersSelect<true>;
         media: MediaSelect<false> | MediaSelect<true>;
         events: EventsSelect<false> | EventsSelect<true>;
-        'common-events': CommonEventsSelect<false> | CommonEventsSelect<true>;
+        links: LinksSelect<false> | LinksSelect<true>;
         sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
         'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
         projects: ProjectsSelect<false> | ProjectsSelect<true>;
@@ -220,18 +220,12 @@ export interface Event {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
-/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "common-events". */
-export interface CommonEvent {
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "links". */
+export interface Link {
     id: string;
-    name: string;
+    title: string;
+    url: string;
     description?: string | null;
-    upcomingDates?:
-        | {
-              date: string;
-              notes?: string | null;
-              id?: string | null;
-          }[]
-        | null;
     updatedAt: string;
     createdAt: string;
     _status?: ('draft' | 'published') | null;
@@ -362,8 +356,8 @@ export interface PayloadLockedDocument {
               value: string | Event;
           } | null)
         | ({
-              relationTo: 'common-events';
-              value: string | CommonEvent;
+              relationTo: 'links';
+              value: string | Link;
           } | null)
         | ({
               relationTo: 'sponsors';
@@ -494,20 +488,11 @@ export interface EventsSelect<T extends boolean = true> {
     createdAt?: T;
     _status?: T;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema via the `definition`
- * "common-events_select".
- */
-export interface CommonEventsSelect<T extends boolean = true> {
-    name?: T;
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "links_select". */
+export interface LinksSelect<T extends boolean = true> {
+    title?: T;
+    url?: T;
     description?: T;
-    upcomingDates?:
-        | T
-        | {
-              date?: T;
-              notes?: T;
-              id?: T;
-          };
     updatedAt?: T;
     createdAt?: T;
     _status?: T;

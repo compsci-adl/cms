@@ -14,6 +14,7 @@ import { Events } from './collections/Events';
 import { Gallery } from './collections/Gallery';
 import { HonoraryMembers } from './collections/HonoraryMembers';
 import { KnownSpamMessages } from './collections/KnownSpamMessages';
+import { Links } from './collections/Links';
 import { Media } from './collections/Media';
 import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
@@ -93,7 +94,7 @@ export default buildConfig({
     Users,
     Media,
     Events,
-    CommonEvents,
+    Links,
     Sponsors,
     Tech_Stack,
     Projects,
