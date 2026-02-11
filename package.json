@@ -28,24 +28,24 @@
     "cross-env": "^7.0.3",
     "graphql": "^16.12.0",
     "mime": "^4.1.0",
-    "next": "^15.5.7",
+    "next": "16.1.6",
     "next-auth": "5.0.0-beta.30",
     "payload": "latest",
     "payload-authjs": "^0.8.4",
     "prettier-plugin-jsdoc": "^1.7.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "sharp": "^0.32.6",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^22.19.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "19.2.13",
+    "@types/react-dom": "19.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^15.5.7",
+    "eslint-config-next": "16.1.6",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
@@ -54,7 +54,9 @@
       "sharp"
     ],
     "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0"
+      "esbuild@<=0.24.2": ">=0.25.0",
+      "@types/react": "19.2.13",
+      "@types/react-dom": "19.2.3"
     }
   }
 }

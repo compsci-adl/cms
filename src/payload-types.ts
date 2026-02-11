@@ -77,6 +77,7 @@ export interface Config {
         'committee-members': CommitteeMember;
         'honorary-members': HonoraryMember;
         'known-spam-messages': KnownSpamMessage;
+        'payload-kv': PayloadKv;
         'payload-locked-documents': PayloadLockedDocument;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
@@ -94,6 +95,7 @@ export interface Config {
         'committee-members': CommitteeMembersSelect<false> | CommitteeMembersSelect<true>;
         'honorary-members': HonoraryMembersSelect<false> | HonoraryMembersSelect<true>;
         'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
+        'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
         'payload-locked-documents':
             | PayloadLockedDocumentsSelect<false>
             | PayloadLockedDocumentsSelect<true>;
@@ -103,6 +105,7 @@ export interface Config {
     db: {
         defaultIDType: string;
     };
+    fallbackLocale: null;
     globals: {
         notification: Notification;
     };
@@ -110,9 +113,7 @@ export interface Config {
         notification: NotificationSelect<false> | NotificationSelect<true>;
     };
     locale: null;
-    user: User & {
-        collection: 'users';
-    };
+    user: User;
     jobs: {
         tasks: unknown;
         workflows: unknown;
@@ -158,14 +159,15 @@ export interface User {
         | null;
     accounts?:
         | {
-              id?: string | null;
               provider: string;
               providerAccountId: string;
               type: string;
+              id?: string | null;
           }[]
         | null;
     updatedAt: string;
     createdAt: string;
+    collection: 'users';
 }
 /** This interface was referenced by `Config`'s JSON-Schema via the `definition` "media". */
 export interface Media {
@@ -336,6 +338,20 @@ export interface KnownSpamMessage {
     createdAt: string;
     _status?: ('draft' | 'published') | null;
 }
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "payload-kv". */
+export interface PayloadKv {
+    id: string;
+    key: string;
+    data:
+        | {
+              [k: string]: unknown;
+          }
+        | unknown[]
+        | string
+        | number
+        | boolean
+        | null;
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema via the `definition`
  * "payload-locked-documents".
@@ -440,10 +456,10 @@ export interface UsersSelect<T extends boolean = true> {
     accounts?:
         | T
         | {
-              id?: T;
               provider?: T;
               providerAccountId?: T;
               type?: T;
+              id?: T;
           };
     updatedAt?: T;
     createdAt?: T;
@@ -576,6 +592,11 @@ export interface KnownSpamMessagesSelect<T extends boolean = true> {
     updatedAt?: T;
     createdAt?: T;
     _status?: T;
+}
+/** This interface was referenced by `Config`'s JSON-Schema via the `definition` "payload-kv_select". */
+export interface PayloadKvSelect<T extends boolean = true> {
+    key?: T;
+    data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema via the `definition`
