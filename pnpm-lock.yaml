@@ -4,16 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  esbuild@<=0.24.2: '>=0.25.0'
-  '@types/react': 19.2.13
-  '@types/react-dom': 19.2.3
-
 importers:
   .:
     dependencies:
       '@aws-sdk/client-s3':
-        specifier: ^3.943.0
+        specifier: ^3.987.0
         version: 3.987.0
       '@payloadcms/db-mongodb':
         specifier: latest
@@ -31,10 +26,10 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(prettier@3.8.1)
       axios:
-        specifier: ^1.13.2
+        specifier: ^1.13.5
         version: 1.13.5
       cors:
-        specifier: ^2.8.5
+        specifier: ^2.8.6
         version: 2.8.6
       cross-env:
         specifier: ^7.0.3
@@ -46,7 +41,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       next:
-        specifier: 16.1.6
+        specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4)
       next-auth:
         specifier: 5.0.0-beta.30
@@ -55,19 +50,19 @@ importers:
         specifier: latest
         version: 3.76.0(graphql@16.12.0)(typescript@5.9.3)
       payload-authjs:
-        specifier: ^0.8.4
-        version: 0.8.4(@payloadcms/ui@3.76.0(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(next-auth@5.0.0-beta.30(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(react@19.2.4))(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))
+        specifier: ^0.10.1
+        version: 0.10.1(@payloadcms/ui@3.76.0(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(next-auth@5.0.0-beta.30(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(react@19.2.4))(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))
       prettier-plugin-jsdoc:
-        specifier: ^1.7.0
+        specifier: ^1.8.0
         version: 1.8.0(prettier@3.8.1)
       prettier-plugin-tailwindcss:
         specifier: ^0.6.14
         version: 0.6.14(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.8.1))(prettier-plugin-jsdoc@1.8.0(prettier@3.8.1))(prettier@3.8.1)
       react:
-        specifier: 19.2.4
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: 19.2.4
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       sharp:
         specifier: ^0.32.6
@@ -80,22 +75,22 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       '@types/node':
-        specifier: ^22.19.1
+        specifier: ^22.19.11
         version: 22.19.11
       '@types/react':
-        specifier: 19.2.13
+        specifier: ^19.2.13
         version: 19.2.13
       '@types/react-dom':
-        specifier: 19.2.3
+        specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.13)
       eslint:
-        specifier: ^9.39.1
+        specifier: ^9.39.2
         version: 9.39.2
       eslint-config-next:
-        specifier: 16.1.6
+        specifier: ^16.1.6
         version: 16.1.6(@typescript-eslint/parser@8.55.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
       prettier:
-        specifier: ^3.7.4
+        specifier: ^3.8.1
         version: 3.8.1
       typescript:
         specifier: ^5.9.3
@@ -2253,7 +2248,7 @@ packages:
         integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==,
       }
     peerDependencies:
-      '@types/react': 19.2.13
+      '@types/react': ^19.2.0
 
   '@types/react-transition-group@4.4.12':
     resolution:
@@ -2261,7 +2256,7 @@ packages:
         integrity: sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==,
       }
     peerDependencies:
-      '@types/react': 19.2.13
+      '@types/react': '*'
 
   '@types/react@19.2.13':
     resolution:
@@ -5245,14 +5240,14 @@ packages:
       }
     engines: { node: '>=8' }
 
-  payload-authjs@0.8.4:
+  payload-authjs@0.10.1:
     resolution:
       {
-        integrity: sha512-bM1B9UXVDrAnI6GuNCAQLlGXtKK/iTnWEDIp+hp571Nt+4cIe5n2baIe+rn3uwCYJGBYvSYeXa/S/a8ZK6bGLg==,
+        integrity: sha512-H2OdIioTrnhGI1gbm0g9/qQvu9mjlmMcsckPq4d1LhZXNBYDbtzaMXxHw37vMIQj2DCSiQDJ7k4VZGpKuezZ8Q==,
       }
     peerDependencies:
       '@payloadcms/ui': ^3.16.0
-      next: ^15.0.0
+      next: ^15.0.0 || ^16.0.0
       next-auth: ^5.0.0-beta.25
       payload: ^3.16.0
 
@@ -10381,7 +10376,7 @@ snapshots:
 
   path-type@4.0.0: {}
 
-  payload-authjs@0.8.4(@payloadcms/ui@3.76.0(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(next-auth@5.0.0-beta.30(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(react@19.2.4))(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3)):
+  payload-authjs@0.10.1(@payloadcms/ui@3.76.0(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(next-auth@5.0.0-beta.30(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(react@19.2.4))(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3)):
     dependencies:
       '@payloadcms/ui': 3.76.0(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.76.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       next: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4)
