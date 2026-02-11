@@ -49,10 +49,6 @@
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
-  "engines": {
-    "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9"
-  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
