@@ -10,7 +10,7 @@
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
@@ -40,7 +40,6 @@
     "slugify": "^1.6.6"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^22.19.11",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
