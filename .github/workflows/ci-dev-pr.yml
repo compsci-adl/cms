@@ -24,6 +24,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Build Docker container
+        env:
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         run: |
           docker buildx build \
             --secret id=FRONTEND_URL \
