@@ -99,7 +99,6 @@ export async function GET(req: NextRequest, context: { params: Promise<{ filenam
         try {
             const uploadDir = path.resolve(process.cwd(), 'uploads');
             const filePath = path.join(uploadDir, filename);
-            console.log('FILENAME: ', filename);
             const fileBuffer = await fs.readFile(filePath);
 
             // application/octet-stream is default case for MIME types for non-text files if no match found
