@@ -10,55 +10,47 @@
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 4000"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.943.0",
+    "@aws-sdk/client-s3": "^3.988.0",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/richtext-lexical": "latest",
     "@payloadcms/storage-s3": "latest",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "axios": "^1.13.2",
-    "cors": "^2.8.5",
+    "axios": "^1.13.5",
+    "cors": "^2.8.6",
     "cross-env": "^7.0.3",
     "graphql": "^16.12.0",
     "mime": "^4.1.0",
-    "next": "^15.5.7",
+    "next": "^16.1.6",
     "next-auth": "5.0.0-beta.30",
     "payload": "latest",
-    "payload-authjs": "^0.8.4",
-    "prettier-plugin-jsdoc": "^1.7.0",
+    "payload-authjs": "^0.10.1",
+    "prettier-plugin-jsdoc": "^1.8.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "sharp": "^0.32.6",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@types/node": "^22.19.1",
-    "@types/react": "^19.2.7",
+    "@types/node": "^22.19.11",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^15.5.7",
-    "prettier": "^3.7.4",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.6",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
-  },
-  "engines": {
-    "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
-    ],
-    "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0"
-    }
+    ]
   }
 }

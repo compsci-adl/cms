@@ -4,6 +4,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   lint-format:
     name: Linting and Formatting Checks
@@ -16,7 +19,7 @@ jobs:
     environment: Development
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -26,4 +29,4 @@ jobs:
         run: |
           docker buildx build \
             --secret id=FRONTEND_URL \
-            --file=Dockerfile -t cms . 
+            --file=Dockerfile -t cms .
