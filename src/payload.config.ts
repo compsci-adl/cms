@@ -19,6 +19,7 @@ import { Projects } from './collections/Projects';
 import { Sponsors } from './collections/Sponsors';
 import { Tech_Stack } from './collections/TechStack';
 import { Users } from './collections/Users';
+import { CommonEvents } from './collections/CommonEvents';
 import Notification from './globals/Notification';
 
 const filename = fileURLToPath(import.meta.url);
@@ -93,6 +94,7 @@ export default buildConfig({
     Users,
     Media,
     Events,
+    CommonEvents,
     Links,
     Sponsors,
     Tech_Stack,
