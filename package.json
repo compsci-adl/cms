@@ -11,8 +11,8 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs,yaml}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs}\"",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 4000"
   },
