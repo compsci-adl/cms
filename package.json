@@ -23,7 +23,7 @@
     "@payloadcms/richtext-lexical": "latest",
     "@payloadcms/storage-s3": "latest",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "axios": "^1.13.5",
+    "axios": "^1.15.0",
     "cors": "^2.8.6",
     "cross-env": "^7.0.3",
     "graphql": "^16.12.0",
