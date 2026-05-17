@@ -16,9 +16,9 @@ WORKDIR /app
 
 COPY --from=deps /tmp ./
 COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
 
 RUN npm install -g pnpm@11 \
-    && pnpm config set ignore-scripts false \
     && pnpm install
 
 COPY . .
