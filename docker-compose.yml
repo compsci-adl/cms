@@ -10,6 +10,8 @@ services:
       - .env
     networks:
       - csclub
+    extra_hosts:
+      - "auth.csclub.org.au:host-gateway"
 
   # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
   mongo:
