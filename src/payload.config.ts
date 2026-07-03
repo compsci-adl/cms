@@ -73,6 +73,14 @@ if (process.env.MEDIA_STORAGE_LOCATION && process.env.MEDIA_STORAGE_LOCATION ===
   );
 }
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL || '',
+  process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
+  'https://csclub.org.au',
+  'https://www.csclub.org.au',
+  'https://cms.csclub.org.au',
+].filter(Boolean);
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -84,12 +92,7 @@ export default buildConfig({
   routes: {
     admin: '/',
   },
-  cors: [
-    process.env.FRONTEND_URL || '',
-    process.env.FRONTEND_URL?.startsWith('https')
-      ? `https://www.${new URL(process.env.FRONTEND_URL).hostname}`
-      : '',
-  ].filter(Boolean),
+  cors: allowedOrigins,
   collections: [
     Users,
     Media,
