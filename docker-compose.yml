@@ -15,7 +15,7 @@ services:
 
   # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
   mongo:
-    image: mongo:latest
+    image: mongo:latest@sha256:e0ce8c35124d4a9f9785532d1f268f39e9728ffa1cb38f46fa482436424c4bd3
     ports:
       - '27017:27017'
     command:
