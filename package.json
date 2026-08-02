@@ -14,7 +14,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,json,mjs,cjs}\"",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 4000"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation node .next/standalone/server.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1101.0",
