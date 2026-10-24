@@ -99,8 +99,7 @@ export interface Config {
         'known-spam-messages': KnownSpamMessagesSelect<false> | KnownSpamMessagesSelect<true>;
         'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
         'payload-locked-documents':
-            | PayloadLockedDocumentsSelect<false>
-            | PayloadLockedDocumentsSelect<true>;
+            PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
         'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
         'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
     };
