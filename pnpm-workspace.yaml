@@ -18,12 +18,13 @@ overrides:
   brace-expansion@>=4.0.0 <5.0.8: ^5.0.9
   immutable@<4.3.9: ^4.3.9
   mongoose@>=8.0.0 <8.24.1: ^8.24.1
-  sharp@<0.35.0: ^0.35.0
+  sharp@<0.35.0: ^0.35.1
 minimumReleaseAgeExclude:
   # Renovate security update: brace-expansion@5.0.9
   - brace-expansion@5.0.7 || 5.0.8 || 5.0.9
   - immutable@4.3.9
-  - sharp@0.35.0
+  # Renovate security update: sharp@0.35.1
+  - sharp@0.35.0 || 0.35.1
   - mongoose@8.24.1
   # Renovate security update: postcss@8.5.11
   - postcss@8.5.11
