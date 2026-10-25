@@ -7,7 +7,7 @@ settings:
 overrides:
   dompurify@<=3.4.15: ^3.4.17
   dompurify@<=3.4.16: ^3.4.17
-  dompurify@>=3.4.13 <=3.4.15: ^3.4.16
+  dompurify@>=3.4.13 <=3.4.15: ^3.4.17
   dompurify@>=3.4.4 <=3.4.16: ^3.4.17
   happy-dom@>=17.0.0 <=21.0.3: ^21.0.4
 
